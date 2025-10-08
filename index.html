@@ -1232,12 +1232,12 @@ nav {
             const totalContainer = document.getElementById('totalExpenses');
             if (totalContainer) {
                 totalContainer.innerHTML = `<p>Всего расходов: ${total.toFixed(2)} ₽</p>
-                <p id="weeklyExpenses">Еженедельные расходы: 0 ₽</p>`;
+                <p id="weeklyExpenses">недельные траты: 0 ₽</p>`;
             }
             const weeklyElem = document.getElementById('weeklyExpenses');
             if (weeklyElem) {
                 let weeklyTotal = parseFloat(localStorage.getItem('weeklyTotal')) || 0;
-                weeklyElem.textContent = `Еженедельные расходы: ${weeklyTotal.toFixed(2)} ₽`;
+                weeklyElem.textContent = `недельные траты: ${weeklyTotal.toFixed(2)} ₽`;
             }
             const totalLimitsContainer = document.getElementById('totalLimits');
             if (totalLimitsContainer) {
@@ -1660,7 +1660,7 @@ nav {
     localStorage.setItem('weeklyTotal', weeklyTotal.toString());
     const weeklyElem = document.getElementById('weeklyExpenses');
     if (weeklyElem) {
-        weeklyElem.textContent = `Еженедельные расходы: ${weeklyTotal.toFixed(2)} ₽`;
+        weeklyElem.textContent = `недельные траты: ${weeklyTotal.toFixed(2)} ₽`;
     }
 }
 
