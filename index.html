@@ -1764,7 +1764,7 @@
                 const docHeight = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight) - window.innerHeight;
                 const scrollPercent = docHeight > 0 ? scrollTop / docHeight : 0;
                 const maxHeight = 50;
-                const scrollbar = document.getElementById('scrollBar').style.height = `${scrollPercent * maxHeight}px`;
+            document.getElementById('scrollBar').style.height = `${scrollPercent * maxHeight}px`;
             });
 
             window.addEventListener('resize', () => {
