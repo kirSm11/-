@@ -16,7 +16,7 @@
 /* Контейнер стопки */
 .card-stack-btn {
     position: fixed;
-    bottom: 40px; /* Изменено с 30px на 40px */
+    bottom: 40px; /* Поднято с 20px на 40px */
     right: 20px;
     width: 100px;
     cursor: pointer;
@@ -481,6 +481,7 @@ input:checked + .slider:before {
     min-width: 50px;
     text-align: center;
     transition: background 0.3s, transform 0.2s;
+    cursor: pointer;
 }
 .limit-badge:hover {
     background: #e0ffe0;
@@ -489,6 +490,22 @@ input:checked + .slider:before {
 .limit-badge.active {
     background: #4CAF50;
     color: white;
+}
+.limit-badge:active {
+    animation: pressAnimation 0.2s ease-out;
+}
+@keyframes pressAnimation {
+    0% { transform: scale(1); background: #d0d0d0; }
+    50% { transform: scale(0.9); background: #b0b0b0; }
+    100% { transform: scale(1); background: #f0f0f0; }
+}
+.limit-badge.active:active {
+    animation: pressAnimationActive 0.2s ease-out;
+}
+@keyframes pressAnimationActive {
+    0% { transform: scale(1); background: #4CAF50; }
+    50% { transform: scale(0.9); background: #3d8b40; }
+    100% { transform: scale(1); background: #4CAF50; }
 }
 .settings-row {
     display: flex;
@@ -1147,6 +1164,25 @@ nav {
                         limitBadge.textContent = `${cat.limit} ₽`;
                         if (cat.limitEnabled) limitBadge.classList.add('active');
                         row.appendChild(limitBadge);
+                        limitBadge.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            let touchTimer = setTimeout(() => {
+                                let categories = JSON.parse(localStorage.getItem('categories')) || [];
+                                let value = prompt(`Введите лимит для категории "${cat.name}"`, cat.limit || 0);
+                                if (value !== null && !isNaN(value)) {
+                                    categories[idx].limit = parseFloat(value);
+                                    localStorage.setItem('categories', JSON.stringify(categories));
+                                    renderCategories();
+                                }
+                            }, 200);
+                            const cancelTouch = () => {
+                                clearTimeout(touchTimer);
+                                document.removeEventListener('mouseup', cancelTouch);
+                                document.removeEventListener('touchend', cancelTouch);
+                            };
+                            document.addEventListener('mouseup', cancelTouch);
+                            document.addEventListener('touchend', cancelTouch);
+                        });
                     }
                     const label = document.createElement('label');
                     label.className = "switch";
@@ -1168,16 +1204,6 @@ nav {
                             else limitBadge.classList.remove('active');
                         }
                         calculateWeeklyExpenses();
-                    });
-                    row.addEventListener('click', (e) => {
-                        if (e.target.tagName.toLowerCase() === 'input' || e.target.classList.contains('slider')) return;
-                        let categories = JSON.parse(localStorage.getItem('categories')) || [];
-                        let value = prompt(`Введите лимит для категории "${cat.name}"`, cat.limit || 0);
-                        if (value !== null && !isNaN(value)) {
-                            categories[idx].limit = parseFloat(value);
-                            localStorage.setItem('categories', JSON.stringify(categories));
-                            renderCategories();
-                        }
                     });
                     settingsList.appendChild(row);
                 }
@@ -1248,7 +1274,7 @@ nav {
         let hawkMode = false;
 
         function showActionModal(button, index) {
-            if (hawkMode) return; // Блокируем модалку в режиме "Ястреб"
+            if (hawkMode) return;
             removeActionModal();
             const modal = document.createElement('div');
             modal.className = 'action-modal';
