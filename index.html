@@ -793,20 +793,21 @@ nav {
             <button onclick="spring(this); showHistory()">История расходов</button>
         </section>
         <section id="settings">
-            <h2>Настройки</h2>
-            <p></p>
-            <button onclick="toggleSubmenu()">лимиты</button>
-            <div id="settingsSubmenu" style="display: none;">
-                <h3>Категории расходов</h3>
-                <div id="settingsCategories"></div>
-            </div>
-            <button onclick="toggleAdminSubmenu()">управление данными</button>
-            <div id="adminSubmenu" style="display: none; margin-top: 15px; padding: 10px; background: #fff; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.2);">
-                <h3>Управление данными</h3>
-                <button onclick="if(confirm('Ты увере, что хочешь сделать с лимитами то, что хочешь?')) clearLimits();">Удалить все лимиты</button>
-                <button onclick="if(confirm('Ты уверен, что хочешь сделать с расходами то, что хочешь?')) clearExpenses();">Удалить все расходы</button>
-            </div>
-        </section>
+    <h2>Настройки</h2>
+    <p></p>
+    <button onclick="toggleSubmenu()">лимиты</button>
+    <div id="settingsSubmenu" style="display: none;">
+        <h3>Категории расходов</h3>
+        <div id="settingsCategories"></div>
+    </div>
+    <button onclick="toggleAdminSubmenu()">управление данными</button>
+    <div id="adminSubmenu" style="display: none; margin-top: 15px; padding: 10px; background: #fff; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.2);">
+        <h3>Управление данными</h3>
+        <button onclick="if(confirm('Ты увере, что хочешь сделать с лимитами то, что хочешь?')) clearLimits();">Удалить все лимиты</button>
+        <button onclick="if(confirm('Ты уверен, что хочешь сделать с расходами то, что хочешь?')) clearExpenses();">Удалить все расходы</button>
+    </div>
+    <button onclick="forceUpdate()">Обновить приложение</button>
+</section>
     </main>
     <canvas id="sparkCanvas"></canvas>
     <script>
@@ -1881,6 +1882,37 @@ function showUpdateBanner(reg) {
   });
 
   document.body.appendChild(banner);
+}
+function forceUpdate() {
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(registrations => {
+            for (let registration of registrations) {
+                registration.unregister().then(() => {
+                    console.log('Service Worker успешно удален');
+                });
+            }
+            caches.keys().then(cacheNames => {
+                return Promise.all(
+                    cacheNames.map(cacheName => {
+                        return caches.delete(cacheName).then(() => {
+                            console.log(`Кэш ${cacheName} удален`);
+                        });
+                    })
+                );
+            }).then(() => {
+                window.location.reload(true);
+            }).catch(err => {
+                console.error('Ошибка при очистке кэша:', err);
+                window.location.reload(true);
+            });
+        }).catch(err => {
+            console.error('Ошибка при получении регистраций Service Worker:', err);
+            window.location.reload(true);
+        });
+    } else {
+        window.location.reload(true);
+    }
+    alert('Приложение обновляется...');
 }
     </script>
 </div>
