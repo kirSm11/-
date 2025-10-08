@@ -11,47 +11,41 @@
 <link rel="apple-touch-icon" href="icons/icon-192.png">
 <link rel="manifest" href="manifest.json">
 <title>деньГа</title>
-
-<!-- Древнеславянский шрифт для заголовка -->
 <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
-
 <style>
 /* Контейнер стопки */
 .card-stack-btn {
-  position: fixed;
-  top: 600px;
-  right: 20px;
-  width: 100px;
-  cursor: pointer;
-  perspective: 800px;
-  z-index: 999;
-  display: none; /* По умолчанию скрыта */
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 100px;
+    cursor: pointer;
+    perspective: 800px;
+    z-index: 999;
+    display: none;
 }
-
 .card-stack-btn.expanded {
-  z-index: 1001;
+    z-index: 1001;
 }
-
 /* Карта */
 .card {
-  position: absolute;
-  width: 80px;
-  height: 50px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.3);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: Arial, sans-serif;
-  font-weight: bold;
-  color: white;
-  font-size: 18px;
-  transform-origin: top center;
-  transition: transform 0.4s cubic-bezier(0.25, 1.5, 0.5, 1), box-shadow 0.4s;
-  user-select: none;
+    position: absolute;
+    width: 80px;
+    height: 50px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    color: white;
+    font-size: 18px;
+    transform-origin: top center;
+    transition: transform 0.4s cubic-bezier(0.25, 1.5, 0.5, 1), box-shadow 0.4s;
+    user-select: none;
 }
-
 /* Цвета и подписи карт */
 .card[data-bank="Сбер"] { background-color: #0f9d58; }
 .card[data-bank="Яндекс"] { background-color: #ff6eb4; }
@@ -61,7 +55,6 @@
 .card[data-bank="Халва"] { background-color: #A9A9A9; color:#000; }
 .card[data-bank="Уралсиб"] { background-color: #800080; }
 .card[data-bank="Другие"] { background-color: #000000; }
-
 /* Положение карт в сложенном состоянии */
 .card-stack-btn:not(.expanded) .card:nth-child(1) { transform: translate(0, 0) rotate(0deg); z-index: 8; }
 .card-stack-btn:not(.expanded) .card:nth-child(2) { transform: translate(0, -5px) rotate(0deg); z-index: 7; }
@@ -71,10 +64,9 @@
 .card-stack-btn:not(.expanded) .card:nth-child(6) { transform: translate(0, -25px) rotate(0deg); z-index: 3; }
 .card-stack-btn:not(.expanded) .card:nth-child(7) { transform: translate(0, -30px) rotate(0deg); z-index: 2; }
 .card-stack-btn:not(.expanded) .card:nth-child(8) { transform: translate(0, -35px) rotate(0deg); z-index: 1; }
-
 /* Положение карт при раскрытии */
 .card-stack-btn.expanded .card {
-  transition: transform 0.4s cubic-bezier(0.25, 1.5, 0.5, 1), box-shadow 0.4s;
+    transition: transform 0.4s cubic-bezier(0.25, 1.5, 0.5, 1), box-shadow 0.4s;
 }
 .card-stack-btn.expanded .card:nth-child(1) { transform: translate(0, 0px) rotate(0deg) scale(1.05); z-index: 1; }
 .card-stack-btn.expanded .card:nth-child(2) { transform: translate(0, -70px) rotate(-5deg) scale(1.05); z-index: 2; }
@@ -84,52 +76,46 @@
 .card-stack-btn.expanded .card:nth-child(6) { transform: translate(0, -350px) rotate(-2deg) scale(1.05); z-index: 6; }
 .card-stack-btn.expanded .card:nth-child(7) { transform: translate(0, -420px) rotate(4deg) scale(1.05); z-index: 7; }
 .card-stack-btn.expanded .card:nth-child(8) { transform: translate(0, -490px) rotate(-4deg) scale(1.05); z-index: 8; }
-
 .card .bank-buttons {
-  position: absolute;
-  left: 110%;
-  top: 60%;
-  transform: translateY(-50%);
-  display: flex;
-  gap: 5px;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s;
+    position: absolute;
+    left: 110%;
+    top: 60%;
+    transform: translateY(-50%);
+    display: flex;
+    gap: 5px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
 }
-
 .card-stack-btn.expanded .card .bank-buttons {
-  opacity: 0;
-  pointer-events: auto;
+    opacity: 0;
+    pointer-events: auto;
 }
-
 .bank-buttons button {
-  background: none;
-  border: none;
-  color: transparent;
-  opacity: 0;
-  width: 40px;
-  height: 40px;
-  cursor: pointer;
-  transition: opacity 0.3s, color 0.3s;
+    background: none;
+    border: none;
+    color: transparent;
+    opacity: 0;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    transition: opacity 0.3s, color 0.3s;
 }
-
 .card-stack-btn.expanded .card .bank-buttons button {
-  opacity: 0;
-  color: transparent;
+    opacity: 0;
+    color: transparent;
 }
-
 /* Оверлей с усиленным затемнением */
 #overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0,0,0,0.85); /* Усиленное затемнение */
-  display: none;
-  z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.85);
+    display: none;
+    z-index: 1000;
 }
-
 html, body {
     overflow-x: hidden;
     touch-action: pan-y;
@@ -142,88 +128,70 @@ html, body {
     -moz-user-select: none;
     -ms-user-select: none;
 }
-
 header {
-  background: linear-gradient(145deg, #4CAF50, #2E7D32);
-  color: white;
-  font-weight: bold;
-  text-align: left;
-  font-size: 32px;
-  padding: 30px 40px;
-  margin: 15px;
-  border-radius: 16px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.25),
-              inset 0 2px 6px rgba(255,255,255,0.3);
-  position: relative;
-  overflow: hidden;
-  font-family: 'MedievalSharp', cursive;
+    background: linear-gradient(145deg, #4CAF50, #2E7D32);
+    color: white;
+    font-weight: bold;
+    text-align: left;
+    font-size: 32px;
+    padding: 30px 40px;
+    margin: 15px;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.25), inset 0 2px 6px rgba(255,255,255,0.3);
+    position: relative;
+    overflow: hidden;
+    font-family: 'MedievalSharp', cursive;
 }
-
-/* Контейнер блеска */
 .shine-container {
-  position: absolute;
-  top: 28px;
-  left: 11%;
-  width: 78%;
-  height: 163px;
-  overflow: hidden;
-  pointer-events: none;
+    position: absolute;
+    top: 28px;
+    left: 11%;
+    width: 78%;
+    height: 163px;
+    overflow: hidden;
+    pointer-events: none;
 }
-
-/* Блестящая полоска */
 .shine-container::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -30%;
-  width: 40%;
-  height: 100%;
-  background: linear-gradient(
-    120deg,
-    rgba(255,255,255,0.1) 0%,
-    rgba(255,255,255,0.4) 30%,
-    rgba(255,255,255,0.1) 60%
-  );
-  transform: skewX(-25deg);
-  animation: shine 10s infinite;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -30%;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(120deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.4) 30%, rgba(255,255,255,0.1) 60%);
+    transform: skewX(-25deg);
+    animation: shine 10s infinite;
 }
-
 @keyframes shine {
-  0% { left: -120%; opacity: 0; }
-  5% { opacity: 1; }
-  70% { left: 100%; opacity: 0.1; }
-  100% { left: 100%; opacity: 0; }
+    0% { left: -120%; opacity: 0; }
+    5% { opacity: 1; }
+    70% { left: 100%; opacity: 0.1; }
+    100% { left: 100%; opacity: 0; }
 }
-
-/* Имитация чипа */
 header::after {
-  content: '';
-  position: absolute;
-  top: 50px;
-  right: 50px;
-  width: 40px;
-  height: 28px;
-  background: linear-gradient(135deg, #d4af37, #f5e29f);
-  border-radius: 4px;
-  box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
+    content: '';
+    position: absolute;
+    top: 50px;
+    right: 50px;
+    width: 40px;
+    height: 28px;
+    background: linear-gradient(135deg, #d4af37, #f5e29f);
+    border-radius: 4px;
+    box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
 }
-
-/* Название в «карточном» стиле */
 .header-box {
-  display: inline-block;
-  background: transparent;
-  color: #fff;
-  font-size: 36px;
-  letter-spacing: 1px;
-  text-shadow: 0 0 8px rgba(0,0,0,0.4);
+    display: inline-block;
+    background: transparent;
+    color: #fff;
+    font-size: 36px;
+    letter-spacing: 1px;
+    text-shadow: 0 0 8px rgba(0,0,0,0.4);
 }
-
 nav {
     display: flex;
     justify-content: space-around;
     margin: 20px 0;
 }
-
 nav button {
     padding: 12px 22px;
     font-size: 14px;
@@ -236,16 +204,13 @@ nav button {
     transition: background 0.2s, color 0.2s;
     z-index: 1;
 }
-
 nav button:hover {
     background: linear-gradient(135deg, #A8E6A2, #45A049);
     color: white;
 }
-
 button:hover {
     background-color: #0b7dda;
 }
-
 @keyframes spring {
     0% { transform: scale(1); }
     10% { transform: scale(0.7); }
@@ -259,25 +224,20 @@ button:hover {
     90% { transform: scale(0.99); }
     100% { transform: scale(1); }
 }
-
 .springing {
     animation: spring 0.95s cubic-bezier(0.68, -0.55, 0.27, 1.55);
 }
-
 main {
     padding: 20px;
     text-align: center;
 }
-
 section {
     display: none;
 }
-
 #categoriesList {
     display: block;
     margin-top: 15px;
 }
-
 #categoriesList button {
     display: block;
     width: 65%;
@@ -296,7 +256,6 @@ section {
     text-align: left;
     margin-left: 20px;
 }
-
 #sparkCanvas {
     position: absolute;
     top: 0;
@@ -304,7 +263,6 @@ section {
     pointer-events: none;
     z-index: 1000;
 }
-
 .action-modal {
     position: fixed;
     background: rgba(65, 105, 225, 1);
@@ -317,7 +275,6 @@ section {
     animation: fadeIn 0.1s ease-out;
     z-index: 9999;
 }
-
 .action-modal button {
     background: linear-gradient(135deg, rgba(244,67,54,1), rgba(255,153,153,1));
     color: white;
@@ -326,57 +283,47 @@ section {
     border-radius: 38px;
     transition: background 0.2s;
 }
-
 .action-modal button.rename {
     background: #2196F3;
 }
-
 .action-modal button:hover {
     opacity: 0.85;
 }
-
 @keyframes fadeIn {
     from { transform: scale(0.8); opacity: 0; }
     to { transform: scale(1); opacity: 1; }
 }
-
 .rename-container {
     margin-top: 5px;
     display: flex;
     justify-content: center;
 }
-
 .rename-container input {
     padding: 5px;
     margin-right: 5px;
     width: 60%;
     max-width: 200px;
 }
-
 .rename-container button {
     padding: 5px 10px;
 }
-
 .placeholder {
     border: 2px dashed #2196F3;
     margin-bottom: 10px;
     height: 40px;
 }
-
 .dragging {
     opacity: 0.7;
     position: absolute;
     z-index: 1000;
     pointer-events: none;
 }
-
 #statsCategories {
     margin-top: 10px;
     text-align: left;
     max-width: 600px;
     margin-inline: auto;
 }
-
 .stat-item {
     background: #ffffff;
     border: 2px solid #4CAF50;
@@ -388,7 +335,6 @@ section {
     justify-content: space-between;
     align-items: center;
 }
-
 #settingsSubmenu {
     display: none;
     margin-top: 15px;
@@ -398,7 +344,6 @@ section {
     box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     transition: all 0.3s ease;
 }
-
 #settingsCategories button {
     display: block;
     width: 100%;
@@ -412,11 +357,9 @@ section {
     cursor: pointer;
     transition: background 0.3s;
 }
-
 #settingsCategories button:hover {
     background: #0b7dda;
 }
-
 #settings button {
     display: block;
     width: 100%;
@@ -430,11 +373,9 @@ section {
     cursor: pointer;
     transition: background 0.3s;
 }
-
 #settings button:hover {
     background: #0b7dda;
 }
-
 .totals-box {
     background: #4CAF50;
     border-radius: 12px;
@@ -445,7 +386,6 @@ section {
     margin-top: 15px;
     font-size: 18px;
 }
-
 #totalsContainer {
     background: #4CAF50;
     border-radius: 12px;
@@ -455,17 +395,14 @@ section {
     text-align: center;
     margin-top: 20px;
 }
-
 #totalsContainer h3 {
     margin-top: 0;
     font-size: 20px;
 }
-
 #totalsContainer p {
     margin: 8px 0;
     font-size: 18px;
 }
-
 .app-container {
     margin-left: auto;
     margin-right: auto;
@@ -477,7 +414,6 @@ section {
     box-sizing: border-box;
     background-color: #f2f2f2;
 }
-
 @media (max-width: 600px) {
     .app-container {
         padding-left: 8px;
@@ -486,56 +422,52 @@ section {
         border-right: 2px solid #0b5ea8;
     }
 }
-
 #clock {
     opacity: 0;
     background: transparent !important;
     box-shadow: none !important;
     color: transparent !important;
 }
-
-/* iOS тумблер */
 .switch {
-  position: relative;
-  display: inline-block;
-  width: 46px;
-  height: 26px;
-  vertical-align: middle;
+    position: relative;
+    display: inline-block;
+    width: 46px;
+    height: 26px;
+    vertical-align: middle;
 }
 .switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
+    opacity: 0;
+    width: 0;
+    height: 0;
 }
 .slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  transition: .3s;
-  border-radius: 34px;
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .3s;
+    border-radius: 34px;
 }
 .slider:before {
-  position: absolute;
-  content: "";
-  height: 20px;
-  width: 20px;
-  left: 3px;
-  bottom: 3px;
-  background-color: white;
-  transition: .3s;
-  border-radius: 50%;
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .3s;
+    border-radius: 50%;
 }
 input:checked + .slider {
-  background-color: #4CAF50;
+    background-color: #4CAF50;
 }
 input:checked + .slider:before {
-  transform: translateX(20px);
+    transform: translateX(20px);
 }
-
 .limit-badge {
     display: inline-block;
     padding: 4px 10px;
@@ -550,17 +482,14 @@ input:checked + .slider:before {
     text-align: center;
     transition: background 0.3s, transform 0.2s;
 }
-
 .limit-badge:hover {
     background: #e0ffe0;
     transform: scale(1.05);
 }
-
 .limit-badge.active {
     background: #4CAF50;
     color: white;
 }
-
 .settings-row {
     display: flex;
     align-items: center;
@@ -570,7 +499,6 @@ input:checked + .slider:before {
     padding: 8px 12px;
     margin-bottom: 8px;
 }
-
 .settings-row .name {
     font-weight: bold;
     overflow: hidden;
@@ -578,28 +506,23 @@ input:checked + .slider:before {
     white-space: nowrap;
     flex: 1;
 }
-
 .limit-badge {
     margin: 0 10px;
     min-width: 60px;
     text-align: center;
 }
-
 .settings-row .switch {
     flex-shrink: 0;
 }
-
 #background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: white;
-  z-index: -1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: white;
+    z-index: -1;
 }
-
-/* Прозрачность интерфейса */
 body,
 .app-container,
 header,
@@ -609,69 +532,59 @@ section,
 #statsCategories,
 #settingsSubmenu,
 #adminSubmenu {
-  background: transparent !important;
-  box-shadow: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
 }
-
-/* Кнопки и панели */
 button {
-  background: rgba(255,255,255,0.2);
-  backdrop-filter: blur(5px);
-  border: 1px solid rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255,255,255,0.3);
 }
-
-/* Модальные окна */
 .action-modal {
-  background: rgba(255,255,255,0.15) !important;
-  backdrop-filter: blur(10px);
-  box-shadow: none !important;
+    background: rgba(255,255,255,0.15) !important;
+    backdrop-filter: blur(10px);
+    box-shadow: none !important;
 }
-
 #background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: white;
-  z-index: -1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: white;
+    z-index: -1;
 }
-
 #header-layer header {
-  background: linear-gradient(135deg, #E6FFE6, #45A049);
-  color: #0b5ea8;
-  font-weight: bold;
-  text-align: center;
-  font-size: 42px;
-  padding: 25px;
-  border-radius: 0 0 12px 12px;
-  font-family: 'MedievalSharp', cursive;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+    background: linear-gradient(135deg, #E6FFE6, #45A049);
+    color: #0b5ea8;
+    font-weight: bold;
+    text-align: center;
+    font-size: 42px;
+    padding: 25px;
+    border-radius: 0 0 12px 12px;
+    font-family: 'MedievalSharp', cursive;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
 }
-
 nav {
-  margin-top: 50px;
+    margin-top: 50px;
 }
-
 #header-layer {
-  position: relative;
-  width: 100%;
-  z-index: -2;
-  overflow: visible;
+    position: relative;
+    width: 100%;
+    z-index: -2;
+    overflow: visible;
 }
-
 .header-box {
-  display: inline-block;
-  background: #4CAF50;
-  color: white;
-  padding: 60px 93px;
-  border-radius: 12px;
-  border: 2px solid rgba(255,255,255,0.8);
-  box-shadow: 0 0 10px #4CAF50, 0 0 20px rgba(11,94,168,0.6);
-  font-family: 'MedievalSharp', cursive;
-  font-size: 34px;
+    display: inline-block;
+    background: #4CAF50;
+    color: white;
+    padding: 60px 93px;
+    border-radius: 12px;
+    border: 2px solid rgba(255,255,255,0.8);
+    box-shadow: 0 0 10px #4CAF50, 0 0 20px rgba(11,94,168,0.6);
+    font-family: 'MedievalSharp', cursive;
+    font-size: 34px;
 }
-
 #scrollLayer {
     position: fixed;
     top: 0;
@@ -681,7 +594,6 @@ nav {
     pointer-events: none;
     z-index: 1000000;
 }
-
 #scrollBar {
     position: fixed;
     top: 0;
@@ -693,1326 +605,1202 @@ nav {
     pointer-events: none;
     transition: height 0.1s ease-out;
 }
-
 /* Стили для модалки истории */
 .history-modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: white;
-  padding: 20px;
-  padding-top: 40px;
-  border-radius: 10px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.5);
-  z-index: 1001;
-  max-width: 90vw;
-  max-height: 80vh;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  touch-action: auto;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    z-index: 1001;
+    max-width: 90vw;
+    max-height: 80vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    touch-action: auto;
 }
-
 .history-modal table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 15px;
-  table-layout: fixed;
-  display: block;
-  overflow-x: auto;
-  overflow-y: auto;
-  max-height: 60vh;
-  white-space: nowrap;
-  touch-action: auto;
-  -webkit-overflow-scrolling: touch;
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+    table-layout: fixed;
+    display: block;
+    overflow-x: auto;
+    overflow-y: auto;
+    max-height: 60vh;
+    white-space: nowrap;
+    touch-action: auto;
+    -webkit-overflow-scrolling: touch;
 }
-
 .history-modal th,
 .history-modal td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  box-sizing: border-box;
-  max-width: 100px;
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    box-sizing: border-box;
+    max-width: 100px;
 }
-
 .history-modal th {
-  background-color: #f2f2f2;
-  font-weight: bold;
+    background-color: #f2f2f2;
+    font-weight: bold;
 }
-
 .history-modal button {
-  padding: 10px 20px;
-  background: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  width: 100%;
+    padding: 10px 20px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
 }
-
 .history-modal button:hover {
-  background: #45a049;
+    background: #45a049;
 }
-
 .history-filter {
-  margin-bottom: 15px;
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
+    margin-bottom: 15px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
 }
-
 .history-filter select {
-  padding: 8px;
-  border-radius: 5px;
-  border: 1px solid #ddd;
-  background: #f9f9f9;
-  font-size: 14px;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    background: #f9f9f9;
+    font-size: 14px;
 }
-
 .close-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 24px;
-  height: 24px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  font-size: 20px;
-  color: #333;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: color 0.2s;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 24px;
+    height: 24px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 0;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s;
 }
-
 .close-btn:hover {
-  color: #f44336;
+    color: #f44336;
 }
-
 .close-btn::before,
 .close-btn::after {
-  content: '';
-  position: absolute;
-  width: 16px;
-  height: 2px;
-  background: currentColor;
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 2px;
+    background: currentColor;
 }
-
 .close-btn::before {
-  transform: rotate(45deg);
+    transform: rotate(45deg);
 }
-
 .close-btn::after {
-  transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
+#hawkBlocker {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    z-index: 9998;
+    pointer-events: auto;
+}
+#hawkBlocker:not(.hawk-mode) {
+    display: none;
+}
+#categoriesList button {
+    pointer-events: auto;
+}
+#exitHawkBtn {
+    pointer-events: auto;
 }
 </style>
 </head>
 <body>
 <div id="overlay"></div>
-
 <div class="card-stack-btn" id="cardStack">
-  <div class="card" data-bank="Сбер"><span>Сбер</span><div class="bank-buttons"><button data-bank="Сбер">Сбер</button></div></div>
-  <div class="card" data-bank="Яндекс"><span>Я</span><div class="bank-buttons"><button data-bank="Яндекс">Яндекс</button></div></div>
-  <div class="card" data-bank="Тинькофф"><span>Т</span><div class="bank-buttons"><button data-bank="Тинькофф">Тинькофф</button></div></div>
-  <div class="card" data-bank="Альфа"><span>А</span><div class="bank-buttons"><button data-bank="Альфа">Альфа</button></div></div>
-  <div class="card" data-bank="ВТБ"><span>ВТБ</span><div class="bank-buttons"><button data-bank="ВТБ">ВТБ</button></div></div>
-  <div class="card" data-bank="Халва"><span>Халва</span><div class="bank-buttons"><button data-bank="Халва">Халва</button></div></div>
-  <div class="card" data-bank="Уралсиб"><span>Урал</span><div class="bank-buttons"><button data-bank="Уралсиб">Уралсиб</button></div></div>
-  <div class="card" data-bank="Другие"><span>Другие</span><div class="bank-buttons"><button data-bank="Другие">Другие</button></div></div>
+    <div class="card" data-bank="Сбер"><span>Сбер</span><div class="bank-buttons"><button data-bank="Сбер">Сбер</button></div></div>
+    <div class="card" data-bank="Яндекс"><span>Я</span><div class="bank-buttons"><button data-bank="Яндекс">Яндекс</button></div></div>
+    <div class="card" data-bank="Тинькофф"><span>Т</span><div class="bank-buttons"><button data-bank="Тинькофф">Тинькофф</button></div></div>
+    <div class="card" data-bank="Альфа"><span>А</span><div class="bank-buttons"><button data-bank="Альфа">Альфа</button></div></div>
+    <div class="card" data-bank="ВТБ"><span>ВТБ</span><div class="bank-buttons"><button data-bank="ВТБ">ВТБ</button></div></div>
+    <div class="card" data-bank="Халва"><span>Халва</span><div class="bank-buttons"><button data-bank="Халва">Халва</button></div></div>
+    <div class="card" data-bank="Уралсиб"><span>Урал</span><div class="bank-buttons"><button data-bank="Уралсиб">Уралсиб</button></div></div>
+    <div class="card" data-bank="Другие"><span>Другие</span><div class="bank-buttons"><button data-bank="Другие">Другие</button></div></div>
 </div>
-
 <div id="header-layer">
-  <header>
-    <span class="header-box">дѢньга</span>
-  </header>
-  <div class="shine-container"></div>
+    <header>
+        <span class="header-box">дѢньга</span>
+    </header>
+    <div class="shine-container"></div>
 </div>
-
 <div id="scrollBar"></div>
-
 <div class="app-container">
-  <nav>
-    <button onclick="spring(this); showSection('expenses')">Расходы</button>
-    <button onclick="spring(this); showSection('stats')">Статистика</button>
-    <button onclick="spring(this); showSection('settings')">Настройки</button>
-  </nav>
+    <nav>
+        <button onclick="spring(this); showSection('expenses')">Расходы</button>
+        <button onclick="spring(this); showSection('stats')">Статистика</button>
+        <button onclick="spring(this); showSection('settings')">Настройки</button>
+    </nav>
+    <main>
+        <section id="expenses">
+            <h2>Расходы</h2>
+            <p></p>
+            <button onclick="addCategory(this)">Добавить категорию</button>
+            <div id="newCategoryContainer"></div>
+            <div id="categoriesList"></div>
+        </section>
+        <section id="stats">
+            <h2>Статистика</h2>
+            <p></p>
+            <h3>Категории</h3>
+            <div id="statsCategories"></div>
+            <h3>Диаграмма расходов</h3>
+            <canvas id="statsChart" width="400" height="400"></canvas>
+            <h3>Итого расходов</h3>
+            <div id="totalExpenses" class="totals-box"></div>
+            <h3>Итоговые лимиты</h3>
+            <div id="totalLimits" class="totals-box"></div>
+            <button onclick="spring(this); showHistory()">История расходов</button>
+        </section>
+        <section id="settings">
+            <h2>Настройки</h2>
+            <p></p>
+            <button onclick="toggleSubmenu()">лимиты</button>
+            <div id="settingsSubmenu" style="display: none;">
+                <h3>Категории расходов</h3>
+                <div id="settingsCategories"></div>
+            </div>
+            <button onclick="toggleAdminSubmenu()">управление данными</button>
+            <div id="adminSubmenu" style="display: none; margin-top: 15px; padding: 10px; background: #fff; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.2);">
+                <h3>Управление данными</h3>
+                <button onclick="if(confirm('Ты увере, что хочешь сделать с лимитами то, что хочешь?')) clearLimits();">Удалить все лимиты</button>
+                <button onclick="if(confirm('Ты уверен, что хочешь сделать с расходами то, что хочешь?')) clearExpenses();">Удалить все расходы</button>
+            </div>
+        </section>
+    </main>
+    <canvas id="sparkCanvas"></canvas>
+    <script>
+        let cards = [];
+        const stack = document.getElementById('cardStack');
+        const overlay = document.getElementById('overlay');
+        const cardStack = document.getElementById('cardStack');
+        let chartInstance = null;
 
-  <main>
-    <section id="expenses">
-      <h2>Расходы</h2>
-      <p></p>
-      <button onclick="addCategory(this)">Добавить категорию</button>
-      <div id="newCategoryContainer"></div>
-      <div id="categoriesList"></div>
-    </section>
-
-    <section id="stats">
-      <h2>Статистика</h2>
-      <p></p>
-      <h3>Категории</h3>
-      <div id="statsCategories"></div>
-      <h3>Диаграмма расходов</h3>
-      <canvas id="statsChart" width="400" height="400"></canvas>
-      <h3>Итого расходов</h3>
-      <div id="totalExpenses" class="totals-box"></div>
-      <h3>Итоговые лимиты</h3>
-      <div id="totalLimits" class="totals-box"></div>
-      <button onclick="spring(this); showHistory()">История расходов</button>
-    </section>
-
-    <section id="settings">
-      <h2>Настройки</h2>
-      <p></p>
-      <button onclick="toggleSubmenu()">лимиты</button>
-      <div id="settingsSubmenu" style="display: none;">
-        <h3>Категории расходов</h3>
-        <div id="settingsCategories"></div>
-      </div>
-      <button onclick="toggleAdminSubmenu()">управление данными</button>
-      <div id="adminSubmenu" style="display: none; margin-top: 15px; padding: 10px; background: #fff; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.2);">
-        <h3>Управление данными</h3>
-        <button onclick="if(confirm('Ты увере, что хочешь сделать с лимитами то, что хочешь?')) clearLimits();">Удалить все лимиты</button>
-        <button onclick="if(confirm('Ты уверен, что хочешь сделать с расходами то, что хочешь?')) clearExpenses();">Удалить все расходы</button>
-      </div>
-    </section>
-  </main>
-
-  <canvas id="sparkCanvas"></canvas>
-
-  <script>
-    // Глобальные переменные для карт
-    let cards = [];
-    const stack = document.getElementById('cardStack');
-    const overlay = document.getElementById('overlay');
-    const cardStack = document.getElementById('cardStack');
-    let chartInstance = null;
-
-    function initCards() {
-      if (!stack || !overlay) {
-        console.error('Элементы stack или overlay не найдены');
-        return;
-      }
-
-      const getCards = () => Array.from(stack.querySelectorAll('.card'));
-      cards = getCards();
-
-      function moveCardToTop(bankName) {
-        if (cards.length === 0) return;
-        const card = cards.find(c => c.dataset.bank === bankName);
-        if (!card) return;
-
-        // Перемещаем карту в начало DOM
-        stack.prepend(card);
-        
-        // Обновляем массив cards
-        cards = [card, ...cards.filter(c => c !== card)];
-        
-        // Сохраняем выбранный банк
-        localStorage.setItem('selectedBank', bankName);
-        
-        // Обновляем z-index и transform только в сложенном состоянии
-        if (!stack.classList.contains('expanded')) {
-          updateCardStyles();
-        }
-        
-        // Переинициализируем обработчики событий
-        initCardListeners();
-      }
-
-      function updateCardStyles() {
-        cards.forEach((card, index) => {
-          card.style.zIndex = cards.length - index; // Первая карта — наивысший z-index
-          card.style.transform = `translate(0, ${-index * 5}px) rotate(0deg)`;
-        });
-      }
-
-      function toggleStack() {
-        stack.classList.toggle('expanded');
-        overlay.style.display = stack.classList.contains('expanded') ? 'block' : 'none';
-        if (!stack.classList.contains('expanded')) {
-          updateCardStyles(); // Восстанавливаем порядок при сворачивании
-        } else {
-          // Сбрасываем JavaScript-стили, чтобы CSS управлял раскладкой
-          cards.forEach(card => {
-            card.style.transform = '';
-            card.style.zIndex = '';
-          });
-        }
-      }
-
-      stack.addEventListener('click', e => {
-        if (e.target.closest('button')) return;
-        toggleStack();
-      });
-
-      overlay.addEventListener('click', () => {
-        stack.classList.remove('expanded');
-        overlay.style.display = 'none';
-        updateCardStyles(); // Восстанавливаем порядок при закрытии оверлея
-      });
-
-      stack.querySelectorAll('.bank-buttons button').forEach(btn => {
-        btn.addEventListener('click', e => {
-          e.stopPropagation();
-          const bankName = btn.dataset.bank || btn.textContent.trim();
-          moveCardToTop(bankName);
-          stack.classList.remove('expanded');
-          overlay.style.display = 'none';
-          updateCardStyles();
-        });
-      });
-
-      function initCardListeners() {
-        getCards().forEach(card => {
-          card.removeEventListener('click', handleCardClick);
-          card.addEventListener('click', handleCardClick);
-        });
-      }
-
-      function handleCardClick(e) {
-        if (!stack.classList.contains('expanded')) return;
-        e.stopPropagation();
-        const bankName = this.dataset.bank;
-        moveCardToTop(bankName);
-        stack.classList.remove('expanded');
-        overlay.style.display = 'none';
-        updateCardStyles();
-      }
-
-      initCardListeners();
-
-      // При загрузке устанавливаем начальные стили для карт
-      updateCardStyles();
-
-      // Восстанавливаем выбранную карту при загрузке
-      const savedBank = localStorage.getItem('selectedBank');
-      if (savedBank) {
-        setTimeout(() => moveCardToTop(savedBank), 100);
-      }
-    }
-
-    function showSection(id) {
-      const sections = document.querySelectorAll('main section');
-      sections.forEach(sec => sec.style.display = 'none');
-      const targetSection = document.getElementById(id);
-      if (targetSection) {
-        targetSection.style.display = 'block';
-      } else {
-        console.warn(`Секция с id "${id}" не найдена`);
-      }
-
-      if (id === 'expenses') {
-        cardStack.style.display = 'block';
-      } else {
-        cardStack.style.display = 'none';
-        if (cardStack.classList.contains('expanded')) {
-          cardStack.classList.remove('expanded');
-          overlay.style.display = 'none';
-          updateCardStyles();
-        }
-      }
-      if (id === 'stats') {
-        renderCategories();
-      }
-    }
-
-    function spring(button) {
-      if (!button) return;
-      button.classList.remove('springing');
-      void button.offsetWidth;
-      button.classList.add('springing');
-      if ('vibrate' in navigator) {
-        navigator.vibrate(50);
-      }
-    }
-
-    function saveCategory(name) {
-      let categories = JSON.parse(localStorage.getItem('categories')) || [];
-      categories.push({name: name, amount: 0, limit: 0, lastUpdate: null});
-      localStorage.setItem('categories', JSON.stringify(categories));
-    }
-
-    function updateCategory(index, newName) {
-      let categories = JSON.parse(localStorage.getItem('categories')) || [];
-      categories[index].name = newName.length > 15 ? newName.slice(0,15) : newName;
-      localStorage.setItem('categories', JSON.stringify(categories));
-    }
-
-    function deleteCategory(index) {
-      let categories = JSON.parse(localStorage.getItem('categories')) || [];
-      categories.splice(index, 1);
-      localStorage.setItem('categories', JSON.stringify(categories));
-    }
-
-    function addCategory(button) {
-      const container = document.getElementById('newCategoryContainer');
-      if (!container) {
-        console.warn('Контейнер newCategoryContainer не найден');
-        return;
-      }
-      
-      container.innerHTML = '';
-
-      const form = document.createElement('form');
-      form.style.display = 'flex';
-      form.style.gap = '10px';
-      form.style.marginTop = '10px';
-
-      const input = document.createElement('input');
-      input.type = 'text';
-      input.placeholder = 'Название новой категории';
-      input.id = 'newCategoryInput';
-      input.required = true;
-      input.style.flex = '1';
-      input.style.padding = '8px';
-      input.maxLength = 15;
-
-      const saveBtn = document.createElement('button');
-      saveBtn.type = 'submit';
-      saveBtn.textContent = 'Сохранить';
-      saveBtn.style.padding = '8px 16px';
-      saveBtn.onclick = (e) => {
-        e.preventDefault();
-        const categoryName = input.value.trim();
-        if (categoryName) {
-          saveCategory(categoryName);
-          renderCategories();
-          container.innerHTML = '';
-        } else {
-          alert('Введите название категории');
-        }
-      };
-
-      const cancelBtn = document.createElement('button');
-      cancelBtn.type = 'button';
-      cancelBtn.textContent = 'Отмена';
-      cancelBtn.style.padding = '8px 16px';
-      cancelBtn.style.backgroundColor = '#f0f0f0';
-      cancelBtn.onclick = () => {
-        container.innerHTML = '';
-      };
-
-      form.appendChild(input);
-      form.appendChild(saveBtn);
-      form.appendChild(cancelBtn);
-      container.appendChild(form);
-
-      input.focus();
-    }
-
-    function getFilteredHistory() {
-      const history = JSON.parse(localStorage.getItem('expensesHistory')) || [];
-      const filters = JSON.parse(localStorage.getItem('historyFilters')) || {};
-
-      let filteredHistory = [...history];
-
-      if (filters.year) {
-        filteredHistory = filteredHistory.filter(exp => new Date(exp.dateISO).getFullYear() == filters.year);
-      }
-      if (filters.month) {
-        filteredHistory = filteredHistory.filter(exp => new Date(exp.dateISO).getMonth() + 1 == filters.month);
-      }
-      if (filters.day) {
-        filteredHistory = filteredHistory.filter(exp => new Date(exp.dateISO).getDate() == filters.day);
-      }
-      if (filters.bank) {
-        filteredHistory = filteredHistory.filter(exp => exp.bank === filters.bank);
-      }
-      if (filters.category) {
-        filteredHistory = filteredHistory.filter(exp => exp.category === filters.category);
-      }
-
-      const sortField = filters.sortField || 'dateISO';
-      const sortOrder = filters.sortOrder || 'desc';
-
-      filteredHistory.sort((a, b) => {
-        let valueA, valueB;
-        if (sortField === 'dateISO') {
-          valueA = new Date(a.dateISO);
-          valueB = new Date(b.dateISO);
-        } else {
-          valueA = a[sortField].toLowerCase();
-          valueB = b[sortField].toLowerCase();
-        }
-        return sortOrder === 'asc' ? (valueA > valueB ? 1 : -1) : (valueA < valueB ? 1 : -1);
-      });
-
-      return filteredHistory;
-    }
-
-    function renderCategories() {
-      const list = document.getElementById('categoriesList');
-      const statsList = document.getElementById('statsCategories');
-      const settingsList = document.getElementById('settingsCategories');
-
-      list.innerHTML = '';
-      if (statsList) statsList.innerHTML = '';
-      if (settingsList) settingsList.innerHTML = '';
-
-      let categories = JSON.parse(localStorage.getItem('categories')) || [];
-      const filteredHistory = getFilteredHistory();
-
-      // Рассчитываем суммы по категориям на основе отфильтрованной истории
-      const categorySums = {};
-      categories.forEach(cat => {
-        categorySums[cat.name] = { amount: 0, limit: cat.limit, limitEnabled: cat.limitEnabled };
-      });
-      filteredHistory.forEach(exp => {
-        if (categorySums[exp.category]) {
-          categorySums[exp.category].amount += exp.amount;
-        }
-      });
-
-      categories.forEach((cat, idx) => {
-        const catBtn = document.createElement('button');
-        let displayName = cat.name.length > 15 ? cat.name.slice(0,15) : cat.name;
-        catBtn.textContent = displayName;
-
-        let pressTimer;
-        let isDragging = false;
-        let startY, currentIndex = idx;
-
-        catBtn.addEventListener('mousedown', startPress);
-        catBtn.addEventListener('touchstart', startPress, { passive: false });
-
-        catBtn.addEventListener('mouseup', cancelPress);
-        catBtn.addEventListener('mouseleave', cancelPress);
-        catBtn.addEventListener('touchend', cancelPress);
-
-        function startPress(e) {
-          if (!dragEnabled) {
-            pressTimer = setTimeout(() => {
-              showActionModal(catBtn, currentIndex);
-            }, 1);
-            return;
-          }
-
-          if (e.type === 'touchstart') e.preventDefault();
-          startY = e.clientY || (e.touches && e.touches[0].clientY);
-          isDragging = false;
-
-          pressTimer = setTimeout(() => {
-            if (!isDragging) showActionModal(catBtn, currentIndex);
-          }, 10);
-
-          function onMove(ev) {
-            const moveY = ev.clientY || (ev.touches && ev.touches[0].clientY);
-            if (!isDragging && Math.abs(moveY - startY) > 5) {
-              isDragging = true;
-              clearTimeout(pressTimer);
-              removeActionModal();
-              catBtn.classList.add('dragging');
+        function initCards() {
+            if (!stack || !overlay) {
+                console.error('Элементы stack или overlay не найдены');
+                return;
             }
-            if (isDragging) {
-              const buttons = Array.from(list.children).filter(b => b.tagName === 'BUTTON');
-              let overIndex = buttons.findIndex(b => {
-                const rect = b.getBoundingClientRect();
-                return moveY > rect.top && moveY < rect.bottom;
-              });
-              if (overIndex !== -1 && overIndex !== currentIndex) {
-                list.insertBefore(catBtn, (overIndex > currentIndex ? buttons[overIndex].nextSibling : buttons[overIndex]));
-                let moved = categories.splice(currentIndex, 1)[0];
-                categories.splice(overIndex, 0, moved);
-                currentIndex = overIndex;
-                localStorage.setItem('categories', JSON.stringify(categories));
-              }
+            const getCards = () => Array.from(stack.querySelectorAll('.card'));
+            cards = getCards();
+
+            function moveCardToTop(bankName) {
+                if (cards.length === 0) return;
+                const card = cards.find(c => c.dataset.bank === bankName);
+                if (!card) return;
+                stack.prepend(card);
+                cards = [card, ...cards.filter(c => c !== card)];
+                localStorage.setItem('selectedBank', bankName);
+                if (!stack.classList.contains('expanded')) {
+                    updateCardStyles();
+                }
+                initCardListeners();
             }
-          }
 
-          function endDrag() {
-            document.removeEventListener('mousemove', onMove);
-            document.removeEventListener('touchmove', onMove);
-            document.removeEventListener('mouseup', endDrag);
-            document.removeEventListener('touchend', endDrag);
-            catBtn.classList.remove('dragging');
-            clearTimeout(pressTimer);
-          }
-
-          document.addEventListener('mousemove', onMove);
-          document.addEventListener('touchmove', onMove, { passive: false });
-          document.addEventListener('mouseup', endDrag);
-          document.addEventListener('touchend', endDrag);
-        }
-
-        function cancelPress() {
-          clearTimeout(pressTimer);
-        }
-
-        list.appendChild(catBtn);
-
-        if (statsList) {
-          const statItem = document.createElement('div');
-          statItem.className = 'stat-item';
-          statItem.style.display = "flex";
-          statItem.style.justifyContent = "space-between";
-          statItem.style.alignItems = "center";
-
-          const left = document.createElement('span');
-          const amount = categorySums[cat.name]?.amount || 0;
-          left.textContent = `${cat.name}: ${amount.toFixed(2)} ₽`;
-
-          statItem.appendChild(left);
-
-          if (cat.limit && cat.limit > 0) {
-            const right = document.createElement('span');
-            let remaining = cat.limit - amount;
-            right.textContent = `Остаток: ${remaining.toFixed(2)} ₽`;
-            if (remaining < 0) {
-              right.style.color = "red";
+            function updateCardStyles() {
+                cards.forEach((card, index) => {
+                    card.style.zIndex = cards.length - index;
+                    card.style.transform = `translate(0, ${-index * 5}px) rotate(0deg)`;
+                });
             }
-            statItem.appendChild(right);
-          }
 
-          statsList.appendChild(statItem);
+            function toggleStack() {
+                stack.classList.toggle('expanded');
+                overlay.style.display = stack.classList.contains('expanded') ? 'block' : 'none';
+                if (!stack.classList.contains('expanded')) {
+                    updateCardStyles();
+                } else {
+                    cards.forEach(card => {
+                        card.style.transform = '';
+                        card.style.zIndex = '';
+                    });
+                }
+            }
+
+            stack.addEventListener('click', e => {
+                if (e.target.closest('button')) return;
+                toggleStack();
+            });
+
+            overlay.addEventListener('click', () => {
+                stack.classList.remove('expanded');
+                overlay.style.display = 'none';
+                updateCardStyles();
+            });
+
+            stack.querySelectorAll('.bank-buttons button').forEach(btn => {
+                btn.addEventListener('click', e => {
+                    e.stopPropagation();
+                    const bankName = btn.dataset.bank || btn.textContent.trim();
+                    moveCardToTop(bankName);
+                    stack.classList.remove('expanded');
+                    overlay.style.display = 'none';
+                    updateCardStyles();
+                });
+            });
+
+            function initCardListeners() {
+                getCards().forEach(card => {
+                    card.removeEventListener('click', handleCardClick);
+                    card.addEventListener('click', handleCardClick);
+                });
+            }
+
+            function handleCardClick(e) {
+                if (!stack.classList.contains('expanded')) return;
+                e.stopPropagation();
+                const bankName = this.dataset.bank;
+                moveCardToTop(bankName);
+                stack.classList.remove('expanded');
+                overlay.style.display = 'none';
+                updateCardStyles();
+            }
+
+            initCardListeners();
+            updateCardStyles();
+            const savedBank = localStorage.getItem('selectedBank');
+            if (savedBank) {
+                setTimeout(() => moveCardToTop(savedBank), 100);
+            }
         }
 
-        if (settingsList) {
-          const row = document.createElement('div');
-          row.className = 'settings-row';
+        function showSection(id) {
+            const sections = document.querySelectorAll('main section');
+            sections.forEach(sec => sec.style.display = 'none');
+            const targetSection = document.getElementById(id);
+            if (targetSection) {
+                targetSection.style.display = 'block';
+            } else {
+                console.warn(`Секция с id "${id}" не найдена`);
+            }
+            if (id === 'expenses') {
+                cardStack.style.display = 'block';
+            } else {
+                cardStack.style.display = 'none';
+                if (cardStack.classList.contains('expanded')) {
+                    cardStack.classList.remove('expanded');
+                    overlay.style.display = 'none';
+                    updateCardStyles();
+                }
+            }
+            if (id === 'stats') {
+                renderCategories();
+            }
+        }
 
-          const nameSpan = document.createElement('span');
-          nameSpan.className = 'name';
-          nameSpan.textContent = cat.name;
+        function spring(button) {
+            if (!button) return;
+            button.classList.remove('springing');
+            void button.offsetWidth;
+            button.classList.add('springing');
+            if ('vibrate' in navigator) {
+                navigator.vibrate(50);
+            }
+        }
 
-          row.appendChild(nameSpan);
-
-          if (cat.limit && cat.limit > 0) {
-            const limitBadge = document.createElement('span');
-            limitBadge.className = 'limit-badge';
-            limitBadge.textContent = `${cat.limit} ₽`;
-            if (cat.limitEnabled) limitBadge.classList.add('active');
-            row.appendChild(limitBadge);
-          }
-
-          const label = document.createElement('label');
-          label.className = "switch";
-          const input = document.createElement('input');
-          input.type = "checkbox";
-          input.checked = cat.limitEnabled ?? (cat.limit && cat.limit > 0);
-          const slider = document.createElement('span');
-          slider.className = "slider";
-          label.appendChild(input);
-          label.appendChild(slider);
-          row.appendChild(label);
-
-          input.addEventListener('change', () => {
+        function saveCategory(name) {
             let categories = JSON.parse(localStorage.getItem('categories')) || [];
-            categories[idx].limitEnabled = input.checked;
+            categories.push({name: name, amount: 0, limit: 0, lastUpdate: null});
             localStorage.setItem('categories', JSON.stringify(categories));
+        }
 
-            const limitBadge = row.querySelector('.limit-badge');
-            if (limitBadge) {
-              if (input.checked) limitBadge.classList.add('active');
-              else limitBadge.classList.remove('active');
-            }
-
-            calculateWeeklyExpenses();
-          });
-
-          row.addEventListener('click', (e) => {
-            if (e.target.tagName.toLowerCase() === 'input' || e.target.classList.contains('slider')) return;
+        function updateCategory(index, newName) {
             let categories = JSON.parse(localStorage.getItem('categories')) || [];
-            let value = prompt(`Введите лимит для категории "${cat.name}"`, cat.limit || 0);
-            if (value !== null && !isNaN(value)) {
-              categories[idx].limit = parseFloat(value);
-              localStorage.setItem('categories', JSON.stringify(categories));
-              renderCategories();
+            categories[index].name = newName.length > 15 ? newName.slice(0,15) : newName;
+            localStorage.setItem('categories', JSON.stringify(categories));
+        }
+
+        function deleteCategory(index) {
+            let categories = JSON.parse(localStorage.getItem('categories')) || [];
+            categories.splice(index, 1);
+            localStorage.setItem('categories', JSON.stringify(categories));
+        }
+
+        function addCategory(button) {
+            const container = document.getElementById('newCategoryContainer');
+            if (!container) {
+                console.warn('Контейнер newCategoryContainer не найден');
+                return;
             }
-          });
 
-          settingsList.appendChild(row);
+            container.innerHTML = '';
+            const form = document.createElement('form');
+            form.style.display = 'flex';
+            form.style.gap = '10px';
+            form.style.marginTop = '10px';
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.placeholder = 'Название новой категории';
+            input.id = 'newCategoryInput';
+            input.required = true;
+            input.style.flex = '1';
+            input.style.padding = '8px';
+            input.maxLength = 15;
+            const saveBtn = document.createElement('button');
+            saveBtn.type = 'submit';
+            saveBtn.textContent = 'Сохранить';
+            saveBtn.style.padding = '8px 16px';
+            saveBtn.onclick = (e) => {
+                e.preventDefault();
+                const categoryName = input.value.trim();
+                if (categoryName) {
+                    saveCategory(categoryName);
+                    renderCategories();
+                    container.innerHTML = '';
+                } else {
+                    alert('Введите название категории');
+                }
+            };
+            const cancelBtn = document.createElement('button');
+            cancelBtn.type = 'button';
+            cancelBtn.textContent = 'Отмена';
+            cancelBtn.style.padding = '8px 16px';
+            cancelBtn.style.backgroundColor = '#f0f0f0';
+            cancelBtn.onclick = () => {
+                container.innerHTML = '';
+            };
+            form.appendChild(input);
+            form.appendChild(saveBtn);
+            form.appendChild(cancelBtn);
+            container.appendChild(form);
+            input.focus();
         }
-      });
 
-      renderChart(Object.keys(categorySums).map(name => ({
-        name,
-        amount: categorySums[name].amount,
-        limit: categorySums[name].limit
-      })));
-
-      let total = Object.values(categorySums).reduce((sum, c) => sum + c.amount, 0);
-      let totalLimits = Object.values(categorySums).reduce((sum, c) => sum + (c.limitEnabled ? c.limit : 0), 0);
-
-      const totalContainer = document.getElementById('totalExpenses');
-      if (totalContainer) {
-        totalContainer.innerHTML = `<p>Всего расходов: ${total.toFixed(2)} ₽</p>
-                                    <p id="weeklyExpenses">Еженедельные расходы: 0 ₽</p>`;
-      }
-
-      const weeklyElem = document.getElementById('weeklyExpenses');
-      if (weeklyElem) {
-        let weeklyTotal = parseFloat(localStorage.getItem('weeklyTotal')) || 0;
-        weeklyElem.textContent = `Еженедельные расходы: ${weeklyTotal.toFixed(2)} ₽`;
-      }
-
-      const totalLimitsContainer = document.getElementById('totalLimits');
-      if (totalLimitsContainer) {
-        totalLimitsContainer.textContent = `Всего лимитов: ${totalLimits.toFixed(2)} ₽`;
-      }
-    }
-
-    function renderChart(categories) {
-      const ctx = document.getElementById('statsChart');
-      if (!ctx) return;
-
-      if (chartInstance) {
-        chartInstance.destroy();
-      }
-
-      const labels = categories.map(c => c.name);
-      const data = categories.map(c => c.amount);
-
-      chartInstance = new Chart(ctx, {
-        type: 'pie',
-        data: {
-          labels: labels,
-          datasets: [{
-            data: data,
-            backgroundColor: [
-              '#FF6384','#36A2EB','#FFCE56',
-              '#4CAF50','#FF9800','#9C27B0',
-              '#00BCD4','#E91E63'
-            ],
-            borderWidth: 1
-          }]
-        },
-        options: {
-          responsive: true,
-          plugins: {
-            legend: { position: 'bottom' },
-            title: {
-              display: true,
-              text: 'Распределение расходов по категориям'
+        function getFilteredHistory() {
+            const history = JSON.parse(localStorage.getItem('expensesHistory')) || [];
+            const filters = JSON.parse(localStorage.getItem('historyFilters')) || {};
+            let filteredHistory = [...history];
+            if (filters.year) {
+                filteredHistory = filteredHistory.filter(exp => new Date(exp.dateISO).getFullYear() == filters.year);
             }
-          }
+            if (filters.month) {
+                filteredHistory = filteredHistory.filter(exp => new Date(exp.dateISO).getMonth() + 1 == filters.month);
+            }
+            if (filters.day) {
+                filteredHistory = filteredHistory.filter(exp => new Date(exp.dateISO).getDate() == filters.day);
+            }
+            if (filters.bank) {
+                filteredHistory = filteredHistory.filter(exp => exp.bank === filters.bank);
+            }
+            if (filters.category) {
+                filteredHistory = filteredHistory.filter(exp => exp.category === filters.category);
+            }
+            const sortField = filters.sortField || 'dateISO';
+            const sortOrder = filters.sortOrder || 'desc';
+            filteredHistory.sort((a, b) => {
+                let valueA, valueB;
+                if (sortField === 'dateISO') {
+                    valueA = new Date(a.dateISO);
+                    valueB = new Date(b.dateISO);
+                } else {
+                    valueA = a[sortField].toLowerCase();
+                    valueB = b[sortField].toLowerCase();
+                }
+                return sortOrder === 'asc' ? (valueA > valueB ? 1 : -1) : (valueA < valueB ? 1 : -1);
+            });
+            return filteredHistory;
         }
-      });
-    }
 
-    let currentModal = null;
-    let outsideClickHandler = null;
-    let dragEnabled = false;
-    let hawkMode = false;
+        function renderCategories() {
+            const list = document.getElementById('categoriesList');
+            const statsList = document.getElementById('statsCategories');
+            const settingsList = document.getElementById('settingsCategories');
+            list.innerHTML = '';
+            if (statsList) statsList.innerHTML = '';
+            if (settingsList) settingsList.innerHTML = '';
+            let categories = JSON.parse(localStorage.getItem('categories')) || [];
+            const filteredHistory = getFilteredHistory();
+            const categorySums = {};
+            categories.forEach(cat => {
+                categorySums[cat.name] = { amount: 0, limit: cat.limit, limitEnabled: cat.limitEnabled };
+            });
+            filteredHistory.forEach(exp => {
+                if (categorySums[exp.category]) {
+                    categorySums[exp.category].amount += exp.amount;
+                }
+            });
+            categories.forEach((cat, idx) => {
+                const catBtn = document.createElement('button');
+                let displayName = cat.name.length > 15 ? cat.name.slice(0,15) : cat.name;
+                catBtn.textContent = displayName;
+                let pressTimer;
+                let isDragging = false;
+                let startY, currentIndex = idx;
+                catBtn.addEventListener('mousedown', startPress);
+                catBtn.addEventListener('touchstart', startPress, { passive: false });
+                catBtn.addEventListener('mouseup', cancelPress);
+                catBtn.addEventListener('mouseleave', cancelPress);
+                catBtn.addEventListener('touchend', cancelPress);
 
-    function showActionModal(button, index) {
-      removeActionModal();
+                function startPress(e) {
+                    if (!dragEnabled) {
+                        pressTimer = setTimeout(() => {
+                            showActionModal(catBtn, currentIndex);
+                        }, 1);
+                        return;
+                    }
+                    if (e.type === 'touchstart') e.preventDefault();
+                    startY = e.clientY || (e.touches && e.touches[0].clientY);
+                    isDragging = false;
+                    pressTimer = setTimeout(() => {
+                        if (!isDragging) showActionModal(catBtn, currentIndex);
+                    }, 10);
 
-      const modal = document.createElement('div');
-      modal.className = 'action-modal';
+                    function onMove(ev) {
+                        const moveY = ev.clientY || (ev.touches && ev.touches[0].clientY);
+                        if (!isDragging && Math.abs(moveY - startY) > 5) {
+                            isDragging = true;
+                            clearTimeout(pressTimer);
+                            removeActionModal();
+                            catBtn.classList.add('dragging');
+                        }
+                        if (isDragging) {
+                            const buttons = Array.from(list.children).filter(b => b.tagName === 'BUTTON');
+                            let overIndex = buttons.findIndex(b => {
+                                const rect = b.getBoundingClientRect();
+                                return moveY > rect.top && moveY < rect.bottom;
+                            });
+                            if (overIndex !== -1 && overIndex !== currentIndex) {
+                                list.insertBefore(catBtn, (overIndex > currentIndex ? buttons[overIndex].nextSibling : buttons[overIndex]));
+                                let moved = categories.splice(currentIndex, 1)[0];
+                                categories.splice(overIndex, 0, moved);
+                                currentIndex = overIndex;
+                                localStorage.setItem('categories', JSON.stringify(categories));
+                            }
+                        }
+                    }
 
-      Object.assign(modal.style, {
-        position: 'fixed',
-        background: '#fff',
-        padding: '20px',
-        border: '1px solid #000',
-        borderRadius: '8px',
-        boxShadow: '0 2px 10px rgba(0,0,0,0.3)',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '10px',
-        zIndex: 9999,
-        opacity: 0,
-        transition: 'opacity 0.2s ease'
-      });
+                    function endDrag() {
+                        document.removeEventListener('mousemove', onMove);
+                        document.removeEventListener('touchmove', onMove);
+                        document.removeEventListener('mouseup', endDrag);
+                        document.removeEventListener('touchend', endDrag);
+                        catBtn.classList.remove('dragging');
+                        clearTimeout(pressTimer);
+                    }
 
-      const renameBtn = document.createElement('button');
-      renameBtn.textContent = 'Переименовать';
-      renameBtn.onclick = (e) => {
-        e.stopPropagation();
-        removeActionModal();
-        showRenameField(button, index);
-      };
+                    document.addEventListener('mousemove', onMove);
+                    document.addEventListener('touchmove', onMove, { passive: false });
+                    document.addEventListener('mouseup', endDrag);
+                    document.addEventListener('touchend', endDrag);
+                }
 
-      const addExpenseBtn = document.createElement('button');
-      addExpenseBtn.textContent = 'Внести расход';
-      addExpenseBtn.onclick = (e) => {
-        e.stopPropagation();
-        removeActionModal();
+                function cancelPress() {
+                    clearTimeout(pressTimer);
+                }
 
-        let categories = JSON.parse(localStorage.getItem('categories'));
-        const category = categories[index];
+                list.appendChild(catBtn);
+                if (statsList) {
+                    const statItem = document.createElement('div');
+                    statItem.className = 'stat-item';
+                    statItem.style.display = "flex";
+                    statItem.style.justifyContent = "space-between";
+                    statItem.style.alignItems = "center";
+                    const left = document.createElement('span');
+                    const amount = categorySums[cat.name]?.amount || 0;
+                    left.textContent = `${cat.name}: ${amount.toFixed(2)} ₽`;
+                    statItem.appendChild(left);
+                    if (cat.limit && cat.limit > 0) {
+                        const right = document.createElement('span');
+                        let remaining = cat.limit - amount;
+                        right.textContent = `Остаток: ${remaining.toFixed(2)} ₽`;
+                        if (remaining < 0) {
+                            right.style.color = "red";
+                        }
+                        statItem.appendChild(right);
+                    }
+                    statsList.appendChild(statItem);
+                }
+                if (settingsList) {
+                    const row = document.createElement('div');
+                    row.className = 'settings-row';
+                    const nameSpan = document.createElement('span');
+                    nameSpan.className = 'name';
+                    nameSpan.textContent = cat.name;
+                    row.appendChild(nameSpan);
+                    if (cat.limit && cat.limit > 0) {
+                        const limitBadge = document.createElement('span');
+                        limitBadge.className = 'limit-badge';
+                        limitBadge.textContent = `${cat.limit} ₽`;
+                        if (cat.limitEnabled) limitBadge.classList.add('active');
+                        row.appendChild(limitBadge);
+                    }
+                    const label = document.createElement('label');
+                    label.className = "switch";
+                    const input = document.createElement('input');
+                    input.type = "checkbox";
+                    input.checked = cat.limitEnabled ?? (cat.limit && cat.limit > 0);
+                    const slider = document.createElement('span');
+                    slider.className = "slider";
+                    label.appendChild(input);
+                    label.appendChild(slider);
+                    row.appendChild(label);
+                    input.addEventListener('change', () => {
+                        let categories = JSON.parse(localStorage.getItem('categories')) || [];
+                        categories[idx].limitEnabled = input.checked;
+                        localStorage.setItem('categories', JSON.stringify(categories));
+                        const limitBadge = row.querySelector('.limit-badge');
+                        if (limitBadge) {
+                            if (input.checked) limitBadge.classList.add('active');
+                            else limitBadge.classList.remove('active');
+                        }
+                        calculateWeeklyExpenses();
+                    });
+                    row.addEventListener('click', (e) => {
+                        if (e.target.tagName.toLowerCase() === 'input' || e.target.classList.contains('slider')) return;
+                        let categories = JSON.parse(localStorage.getItem('categories')) || [];
+                        let value = prompt(`Введите лимит для категории "${cat.name}"`, cat.limit || 0);
+                        if (value !== null && !isNaN(value)) {
+                            categories[idx].limit = parseFloat(value);
+                            localStorage.setItem('categories', JSON.stringify(categories));
+                            renderCategories();
+                        }
+                    });
+                    settingsList.appendChild(row);
+                }
+            });
 
-        let amount = prompt(`Введите сумму расхода для категории "${category.name}"`, '0');
-        if (amount !== null && !isNaN(amount)) {
-          amount = parseFloat(amount);
+            renderChart(Object.keys(categorySums).map(name => ({
+                name,
+                amount: categorySums[name].amount,
+                limit: categorySums[name].limit
+            })));
 
-          const bank = localStorage.getItem('selectedBank') || 'Неизвестно';
-          const now = new Date();
-          const dateStr = now.toLocaleDateString('ru-RU');
-          const days = ['Воскресенье','Понедельник','Вторник','Среда','Четверг','Пятница','Суббота'];
-          const dayOfWeek = days[now.getDay()];
-          const dateISO = now.toISOString();
-
-          let history = JSON.parse(localStorage.getItem('expensesHistory')) || [];
-          history.push({
-            bank: bank,
-            dateStr: dateStr,
-            dayOfWeek: dayOfWeek,
-            amount: amount,
-            category: category.name,
-            dateISO: dateISO
-          });
-          localStorage.setItem('expensesHistory', JSON.stringify(history));
-
-          category.amount += amount;
-          category.lastUpdate = dateISO;
-          categories[index] = category;
-          localStorage.setItem('categories', JSON.stringify(categories));
-
-          calculateWeeklyExpenses();
-          renderCategories();
-        } else {
-          alert('Некорректная сумма');
+            let total = Object.values(categorySums).reduce((sum, c) => sum + c.amount, 0);
+            let totalLimits = Object.values(categorySums).reduce((sum, c) => sum + (c.limit || 0), 0);
+            const totalContainer = document.getElementById('totalExpenses');
+            if (totalContainer) {
+                totalContainer.innerHTML = `<p>Всего расходов: ${total.toFixed(2)} ₽</p>
+                <p id="weeklyExpenses">Еженедельные расходы: 0 ₽</p>`;
+            }
+            const weeklyElem = document.getElementById('weeklyExpenses');
+            if (weeklyElem) {
+                let weeklyTotal = parseFloat(localStorage.getItem('weeklyTotal')) || 0;
+                weeklyElem.textContent = `Еженедельные расходы: ${weeklyTotal.toFixed(2)} ₽`;
+            }
+            const totalLimitsContainer = document.getElementById('totalLimits');
+            if (totalLimitsContainer) {
+                totalLimitsContainer.textContent = `Всего лимитов: ${totalLimits.toFixed(2)} ₽`;
+            }
         }
-      };
 
-      const deleteBtn = document.createElement('button');
-      deleteBtn.textContent = 'Удалить';
-      deleteBtn.onclick = (e) => {
-        e.stopPropagation();
-        deleteCategory(index);
-        removeActionModal();
-        renderCategories();
-      };
+        function renderChart(categories) {
+            const ctx = document.getElementById('statsChart');
+            if (!ctx) return;
+            if (chartInstance) {
+                chartInstance.destroy();
+            }
+            const labels = categories.map(c => c.name);
+            const data = categories.map(c => c.amount);
+            chartInstance = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: [
+                            '#FF6384','#36A2EB','#FFCE56',
+                            '#4CAF50','#FF9800','#9C27B0',
+                            '#00BCD4','#E91E63'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { position: 'bottom' },
+                        title: {
+                            display: true,
+                            text: 'Распределение расходов по категориям'
+                        }
+                    }
+                }
+            });
+        }
 
-      modal.appendChild(renameBtn);
-      modal.appendChild(addExpenseBtn);
-      modal.appendChild(deleteBtn);
+        let currentModal = null;
+        let outsideClickHandler = null;
+        let dragEnabled = false;
+        let hawkMode = false;
 
-      const hawkBtn = document.createElement('button');
-      hawkBtn.textContent = 'настроить 🦅';
-      hawkBtn.style.background = 'linear-gradient(135deg, #5A7DE1, #A0D4FA)';
-      hawkBtn.style.color = 'white';
-      hawkBtn.style.fontWeight = 'bold';
-      hawkBtn.style.borderRadius = '38px';
-      hawkBtn.onclick = (e) => {
-        e.stopPropagation();
-        removeActionModal();
-        dragEnabled = true;
-        hawkMode = true;
+        function showActionModal(button, index) {
+            if (hawkMode) return; // Блокируем модалку в режиме "Ястреб"
+            removeActionModal();
+            const modal = document.createElement('div');
+            modal.className = 'action-modal';
+            Object.assign(modal.style, {
+                position: 'fixed',
+                background: '#fff',
+                padding: '20px',
+                border: '1px solid #000',
+                borderRadius: '8px',
+                boxShadow: '0 2px 10px rgba(0,0,0,0.3)',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '10px',
+                zIndex: 9999,
+                opacity: 0,
+                transition: 'opacity 0.2s ease'
+            });
+            const renameBtn = document.createElement('button');
+            renameBtn.textContent = 'Переименовать';
+            renameBtn.onclick = (e) => {
+                e.stopPropagation();
+                removeActionModal();
+                showRenameField(button, index);
+            };
+            const addExpenseBtn = document.createElement('button');
+            addExpenseBtn.textContent = 'Внести расход';
+            addExpenseBtn.onclick = (e) => {
+                e.stopPropagation();
+                removeActionModal();
+                let categories = JSON.parse(localStorage.getItem('categories'));
+                const category = categories[index];
+                let amount = prompt(`Введите сумму расхода для категории "${category.name}"`, '0');
+                if (amount !== null && !isNaN(amount)) {
+                    amount = parseFloat(amount);
+                    const bank = localStorage.getItem('selectedBank') || 'Неизвестно';
+                    const now = new Date();
+                    const dateStr = now.toLocaleDateString('ru-RU');
+                    const days = ['Воскресенье','Понедельник','Вторник','Среда','Четверг','Пятница','Суббота'];
+                    const dayOfWeek = days[now.getDay()];
+                    const dateISO = now.toISOString();
+                    let history = JSON.parse(localStorage.getItem('expensesHistory')) || [];
+                    history.push({
+                        bank: bank,
+                        dateStr: dateStr,
+                        dayOfWeek: dayOfWeek,
+                        amount: amount,
+                        category: category.name,
+                        dateISO: dateISO
+                    });
+                    localStorage.setItem('expensesHistory', JSON.stringify(history));
+                    category.amount += amount;
+                    category.lastUpdate = dateISO;
+                    categories[index] = category;
+                    localStorage.setItem('categories', JSON.stringify(categories));
+                    calculateWeeklyExpenses();
+                    renderCategories();
+                } else {
+                    alert('Некорректная сумма');
+                }
+            };
+            const deleteBtn = document.createElement('button');
+            deleteBtn.textContent = 'Удалить';
+            deleteBtn.onclick = (e) => {
+                e.stopPropagation();
+                deleteCategory(index);
+                removeActionModal();
+                renderCategories();
+            };
+            modal.appendChild(renameBtn);
+            modal.appendChild(addExpenseBtn);
+            modal.appendChild(deleteBtn);
+            const hawkBtn = document.createElement('button');
+            hawkBtn.textContent = 'настроить 🦅';
+            hawkBtn.style.background = 'linear-gradient(135deg, #5A7DE1, #A0D4FA)';
+            hawkBtn.style.color = 'white';
+            hawkBtn.style.fontWeight = 'bold';
+            hawkBtn.style.borderRadius = '38px';
+            hawkBtn.onclick = (e) => {
+                e.stopPropagation();
+                removeActionModal();
+                dragEnabled = true;
+                hawkMode = true;
+                const blocker = document.getElementById('hawkBlocker') || document.createElement('div');
+                blocker.id = 'hawkBlocker';
+                blocker.classList.add('hawk-mode');
+                Object.assign(blocker.style, {
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    background: 'rgba(0,0,0,0.6)',
+                    zIndex: 9998,
+                    pointerEvents: 'auto'
+                });
+                document.body.appendChild(blocker);
+                const exitBtn = document.getElementById('exitHawkBtn') || document.createElement('button');
+                exitBtn.id = 'exitHawkBtn';
+                exitBtn.textContent = 'ОК';
+                Object.assign(exitBtn.style, {
+                    position: 'fixed',
+                    bottom: '20px',
+                    right: '20px',
+                    padding: '15px 25px',
+                    fontSize: '18px',
+                    borderRadius: '12px',
+                    background: 'linear-gradient(135deg, #4CAF50, #81C784)',
+                    color: 'white',
+                    fontWeight: 'bold',
+                    zIndex: 100000
+                });
+                exitBtn.onclick = () => {
+                    document.getElementById('hawkBlocker')?.remove();
+                    exitBtn.remove();
+                    hawkMode = false;
+                    dragEnabled = false;
+                    alert('🦅 ЯСТРЕБ ушёл отдыхать.');
+                };
+                document.body.appendChild(exitBtn);
+                alert('🦅 ЯСТРЕБ взлетел! Можно только перетаскивать категории.');
+            };
+            modal.appendChild(hawkBtn);
+            document.body.appendChild(modal);
+            const rect = modal.getBoundingClientRect();
+            modal.style.left = `calc(50% - ${rect.width / 2}px)`;
+            modal.style.top = `calc(50% - ${rect.height / 2}px)`;
+            requestAnimationFrame(() => {
+                modal.style.opacity = '1';
+            });
+            currentModal = modal;
+            outsideClickHandler = (e) => {
+                if (!modal.contains(e.target)) removeActionModal();
+            };
+            setTimeout(() => document.addEventListener('click', outsideClickHandler), 0);
+        }
 
-        const blocker = document.createElement('div');
-        blocker.id = 'hawkBlocker';
-        Object.assign(blocker.style, {
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          background: 'rgba(0,0,0,0.2)',
-          zIndex: 99999,
-          cursor: 'not-allowed',
-          pointerEvents: 'none'
+        function removeActionModal() {
+            if (currentModal) currentModal.remove();
+            currentModal = null;
+            if (outsideClickHandler) document.removeEventListener('click', outsideClickHandler);
+            outsideClickHandler = null;
+        }
+
+        function showHistory() {
+            let startX, startY;
+            let scrollDirection = null;
+            const history = JSON.parse(localStorage.getItem('expensesHistory')) || [];
+            const filters = JSON.parse(localStorage.getItem('historyFilters')) || {};
+            overlay.style.display = 'block';
+            const modal = document.createElement('div');
+            modal.className = 'history-modal';
+            const closeBtn = document.createElement('button');
+            closeBtn.className = 'close-btn';
+            closeBtn.onclick = () => {
+                overlay.style.display = 'none';
+                modal.remove();
+                renderCategories();
+            };
+            const filterDiv = document.createElement('div');
+            filterDiv.className = 'history-filter';
+            const yearSelect = document.createElement('select');
+            yearSelect.id = 'yearFilter';
+            const monthSelect = document.createElement('select');
+            monthSelect.id = 'monthFilter';
+            const daySelect = document.createElement('select');
+            daySelect.id = 'dayFilter';
+            const bankSelect = document.createElement('select');
+            bankSelect.id = 'bankFilter';
+            const categorySelect = document.createElement('select');
+            categorySelect.id = 'categoryFilter';
+            const resetButton = document.createElement('button');
+            resetButton.textContent = 'Сбросить фильтры';
+            resetButton.style.padding = '8px 16px';
+            resetButton.style.background = 'linear-gradient(135deg, #f44336, #ff9999)';
+            resetButton.style.color = 'white';
+            resetButton.style.border = 'none';
+            resetButton.style.borderRadius = '5px';
+            resetButton.style.cursor = 'pointer';
+            const years = [...new Set(history.map(exp => new Date(exp.dateISO).getFullYear()))].sort((a, b) => a - b);
+            yearSelect.innerHTML = '<option value="">Все годы</option>' + years.map(y => `<option value="${y}">${y}</option>`).join('');
+            yearSelect.value = filters.year || '';
+            const months = [
+                { value: 1, text: 'Январь' }, { value: 2, text: 'Февраль' }, { value: 3, text: 'Март' },
+                { value: 4, text: 'Апрель' }, { value: 5, text: 'Май' }, { value: 6, text: 'Июнь' },
+                { value: 7, text: 'Июль' }, { value: 8, text: 'Август' }, { value: 9, text: 'Сентябрь' },
+                { value: 10, text: 'Октябрь' }, { value: 11, text: 'Ноябрь' }, { value: 12, text: 'Декабрь' }
+            ];
+            monthSelect.innerHTML = '<option value="">Все месяцы</option>' + months.map(m => `<option value="${m.value}">${m.text}</option>`).join('');
+            monthSelect.value = filters.month || '';
+            const days = [...new Set(history.map(exp => new Date(exp.dateISO).getDate()))].sort((a, b) => a - b);
+            daySelect.innerHTML = '<option value="">Все дни</option>' + days.map(d => `<option value="${d}">${d.toString().padStart(2, '0')}</option>`).join('');
+            daySelect.value = filters.day || '';
+            const banks = [...new Set(history.map(exp => exp.bank))].sort();
+            bankSelect.innerHTML = '<option value="">Все банки</option>' + banks.map(b => `<option value="${b}">${b}</option>`).join('');
+            bankSelect.value = filters.bank || '';
+            const categories = [...new Set(history.map(exp => exp.category))].sort();
+            categorySelect.innerHTML = '<option value="">Все категории</option>' + categories.map(c => `<option value="${c}">${c}</option>`).join('');
+            categorySelect.value = filters.category || '';
+            filterDiv.appendChild(yearSelect);
+            filterDiv.appendChild(monthSelect);
+            filterDiv.appendChild(daySelect);
+            filterDiv.appendChild(bankSelect);
+            filterDiv.appendChild(categorySelect);
+            filterDiv.appendChild(resetButton);
+            const table = document.createElement('table');
+            const thead = document.createElement('thead');
+            const tbody = document.createElement('tbody');
+            const headerRow = document.createElement('tr');
+            ['Банк', 'Дата', 'День недели', 'Сумма', 'Категория'].forEach(text => {
+                const th = document.createElement('th');
+                th.textContent = text;
+                headerRow.appendChild(th);
+            });
+            thead.appendChild(headerRow);
+
+            function renderHistory(filteredHistory) {
+                tbody.innerHTML = '';
+                filteredHistory.forEach(exp => {
+                    const row = document.createElement('tr');
+                    [exp.bank, exp.dateStr, exp.dayOfWeek, `${exp.amount.toFixed(2)} ₽`, exp.category].forEach(text => {
+                        const td = document.createElement('td');
+                        td.textContent = text;
+                        row.appendChild(td);
+                    });
+                    tbody.appendChild(row);
+                });
+            }
+
+            function filterAndSortHistory() {
+                let filteredHistory = [...history];
+                filters.year = yearSelect.value;
+                filters.month = monthSelect.value;
+                filters.day = daySelect.value;
+                filters.bank = bankSelect.value;
+                filters.category = categorySelect.value;
+                if (filters.year) {
+                    filteredHistory = filteredHistory.filter(exp => new Date(exp.dateISO).getFullYear() == filters.year);
+                }
+                if (filters.month) {
+                    filteredHistory = filteredHistory.filter(exp => new Date(exp.dateISO).getMonth() + 1 == filters.month);
+                }
+                if (filters.day) {
+                    filteredHistory = filteredHistory.filter(exp => new Date(exp.dateISO).getDate() == filters.day);
+                }
+                if (filters.bank) {
+                    filteredHistory = filteredHistory.filter(exp => exp.bank === filters.bank);
+                }
+                if (filters.category) {
+                    filteredHistory = filteredHistory.filter(exp => exp.category === filters.category);
+                }
+                filteredHistory.sort((a, b) => new Date(b.dateISO) - new Date(a.dateISO));
+                localStorage.setItem('historyFilters', JSON.stringify(filters));
+                renderHistory(filteredHistory);
+                renderCategories();
+            }
+
+            resetButton.addEventListener('click', () => {
+                yearSelect.value = '';
+                monthSelect.value = '';
+                daySelect.value = '';
+                bankSelect.value = '';
+                categorySelect.value = '';
+                localStorage.removeItem('historyFilters');
+                filterAndSortHistory();
+            });
+
+            [yearSelect, monthSelect, daySelect, bankSelect, categorySelect].forEach(select => {
+                select.addEventListener('change', filterAndSortHistory);
+            });
+
+            table.addEventListener('touchstart', (e) => {
+                const touch = e.touches[0];
+                startX = touch.clientX;
+                startY = touch.clientY;
+                scrollDirection = null;
+            }, { passive: true });
+
+            table.addEventListener('touchmove', (e) => {
+                if (!scrollDirection) {
+                    const touch = e.touches[0];
+                    const deltaX = Math.abs(touch.clientX - startX);
+                    const deltaY = Math.abs(touch.clientY - startY);
+                    if (deltaX > deltaY && deltaX > 5) {
+                        scrollDirection = 'horizontal';
+                        table.style.touchAction = 'pan-x';
+                    } else if (deltaY > deltaX && deltaY > 5) {
+                        scrollDirection = 'vertical';
+                        table.style.touchAction = 'pan-y';
+                    }
+                }
+            }, { passive: true });
+
+            table.addEventListener('touchend', () => {
+                table.style.touchAction = 'auto';
+                scrollDirection = null;
+            });
+
+            modal.appendChild(closeBtn);
+            modal.appendChild(filterDiv);
+            modal.appendChild(table);
+            table.appendChild(thead);
+            table.appendChild(tbody);
+            document.body.appendChild(modal);
+            filterAndSortHistory();
+            const overlayHandler = () => {
+                overlay.style.display = 'none';
+                modal.remove();
+                overlay.removeEventListener('click', overlayHandler);
+                renderCategories();
+            };
+            overlay.addEventListener('click', overlayHandler);
+        }
+
+        function cleanOldExpenses() {
+            const history = JSON.parse(localStorage.getItem('expensesHistory')) || [];
+            const twelveMonthsAgo = new Date();
+            twelveMonthsAgo.setMonth(twelveMonthsAgo.getMonth() - 12);
+            const recent = history.filter(exp => new Date(exp.dateISO) >= twelveMonthsAgo);
+            localStorage.setItem('expensesHistory', JSON.stringify(recent));
+        }
+
+        function showRenameField(button, index) {
+            const existing = button.parentNode.querySelector('.rename-container');
+            if (existing) existing.remove();
+            const container = document.createElement('div');
+            container.className = 'rename-container';
+            const input = document.createElement('input');
+            const currentName = JSON.parse(localStorage.getItem('categories'))[index].name;
+            input.type = 'text';
+            input.value = currentName.length > 15 ? currentName.slice(0,15) : currentName;
+            input.maxLength = 15;
+            const saveBtn = document.createElement('button');
+            saveBtn.textContent = 'Сохранить';
+            saveBtn.onclick = () => {
+                let newName = input.value.trim();
+                if (newName.length > 15) newName = newName.slice(0,15);
+                if (newName) {
+                    updateCategory(index, newName);
+                    renderCategories();
+                }
+            };
+            container.appendChild(input);
+            container.appendChild(saveBtn);
+            button.parentNode.insertBefore(container, button.nextSibling);
+        }
+
+        function getStartOfWeek() {
+            const now = new Date();
+            const day = now.getDay();
+            const diff = now.getDate() - day + (day === 0 ? -6 : 1);
+            const monday = new Date(now.setDate(diff));
+            monday.setHours(0,0,0,0);
+            return monday;
+        }
+
+        function calculateWeeklyExpenses() {
+            const filteredHistory = getFilteredHistory();
+            const startOfWeek = getStartOfWeek();
+            let weeklyTotal = 0;
+            filteredHistory.forEach(exp => {
+                const updateDate = new Date(exp.dateISO);
+                if (updateDate >= startOfWeek) {
+                    weeklyTotal += exp.amount;
+                }
+            });
+            localStorage.setItem('weeklyTotal', weeklyTotal.toString());
+            const weeklyElem = document.getElementById('weeklyExpenses');
+            if (weeklyElem) {
+                weeklyElem.textContent = `Еженедельные расходы: ${weeklyTotal.toFixed(2)} ₽`;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(registration => console.log('SW registered: ', registration))
+                    .catch(error => console.log('SW registration failed: ', error));
+            }
+            if (!localStorage.getItem('weeklyTotal')) {
+                localStorage.setItem('weeklyTotal', '0');
+            }
+            cleanOldExpenses();
+            autoResetMonthlyExpenses();
+            autoResetWeeklyExpenses();
+            initCards();
+            showSection('expenses');
+            renderCategories();
         });
-        document.body.appendChild(blocker);
 
-        const exitBtn = document.createElement('button');
-        exitBtn.id = 'exitHawkBtn';
-        exitBtn.textContent = 'ОК';
-        Object.assign(exitBtn.style, {
-          position: 'fixed',
-          bottom: '20px',
-          right: '20px',
-          padding: '15px 25px',
-          fontSize: '18px',
-          borderRadius: '12px',
-          background: 'linear-gradient(135deg, #4CAF50, #81C784)',
-          color: 'white',
-          fontWeight: 'bold',
-          zIndex: 100000
+        const canvas = document.getElementById('sparkCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const docHeight = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight) - window.innerHeight;
+            const scrollPercent = docHeight > 0 ? scrollTop / docHeight : 0;
+            const maxHeight = window.innerHeight * 0.4;
+            const scrollBar = document.getElementById('scrollBar');
+            if(scrollBar) {
+                scrollBar.style.top = '0';
+                scrollBar.style.height = `${scrollPercent * maxHeight}px`;
+            }
         });
-        exitBtn.onclick = () => {
-          document.getElementById('hawkBlocker')?.remove();
-          exitBtn.remove();
-          hawkMode = false;
-          dragEnabled = false;
-          alert('🦅 ЯСТРЕБ ушёл отдыхать.');
-        };
-        document.body.appendChild(exitBtn);
 
-        alert('🦅 ЯСТРЕБ взлетел! Интерфейс заблокирован!');
-      };
-
-      modal.appendChild(hawkBtn);
-
-      document.body.appendChild(modal);
-
-      const rect = modal.getBoundingClientRect();
-      modal.style.left = `calc(50% - ${rect.width / 2}px)`;
-      modal.style.top = `calc(50% - ${rect.height / 2}px)`;
-
-      requestAnimationFrame(() => {
-        modal.style.opacity = '1';
-      });
-
-      currentModal = modal;
-      outsideClickHandler = (e) => {
-        if (!modal.contains(e.target)) removeActionModal();
-      };
-      setTimeout(() => document.addEventListener('click', outsideClickHandler), 0);
-    }
-
-    function removeActionModal() {
-      if (currentModal) currentModal.remove();
-      currentModal = null;
-      if (outsideClickHandler) document.removeEventListener('click', outsideClickHandler);
-      outsideClickHandler = null;
-    }
-
-function showHistory() {
-  let startX, startY; // Для отслеживания начальных координат касания
-  let scrollDirection = null; // Для хранения направления прокрутки
-  const history = JSON.parse(localStorage.getItem('expensesHistory')) || [];
-  const filters = JSON.parse(localStorage.getItem('historyFilters')) || {};
-
-  overlay.style.display = 'block';
-
-  const modal = document.createElement('div');
-  modal.className = 'history-modal';
-
-  const closeBtn = document.createElement('button');
-  closeBtn.className = 'close-btn';
-  closeBtn.onclick = () => {
-    overlay.style.display = 'none';
-    modal.remove();
-    renderCategories();
-  };
-
-  const filterDiv = document.createElement('div');
-  filterDiv.className = 'history-filter';
-
-  const yearSelect = document.createElement('select');
-  yearSelect.id = 'yearFilter';
-  const monthSelect = document.createElement('select');
-  monthSelect.id = 'monthFilter';
-  const daySelect = document.createElement('select');
-  daySelect.id = 'dayFilter';
-  const bankSelect = document.createElement('select');
-  bankSelect.id = 'bankFilter';
-  const categorySelect = document.createElement('select');
-  categorySelect.id = 'categoryFilter';
-  const resetButton = document.createElement('button');
-  resetButton.textContent = 'Сбросить фильтры';
-  resetButton.style.padding = '8px 16px';
-  resetButton.style.background = 'linear-gradient(135deg, #f44336, #ff9999)';
-  resetButton.style.color = 'white';
-  resetButton.style.border = 'none';
-  resetButton.style.borderRadius = '5px';
-  resetButton.style.cursor = 'pointer';
-
-  const years = [...new Set(history.map(exp => new Date(exp.dateISO).getFullYear()))].sort((a, b) => a - b);
-  yearSelect.innerHTML = '<option value="">Все годы</option>' + years.map(y => `<option value="${y}">${y}</option>`).join('');
-  yearSelect.value = filters.year || '';
-
-  const months = [
-    { value: 1, text: 'Январь' }, { value: 2, text: 'Февраль' }, { value: 3, text: 'Март' },
-    { value: 4, text: 'Апрель' }, { value: 5, text: 'Май' }, { value: 6, text: 'Июнь' },
-    { value: 7, text: 'Июль' }, { value: 8, text: 'Август' }, { value: 9, text: 'Сентябрь' },
-    { value: 10, text: 'Октябрь' }, { value: 11, text: 'Ноябрь' }, { value: 12, text: 'Декабрь' }
-  ];
-  monthSelect.innerHTML = '<option value="">Все месяцы</option>' + months.map(m => `<option value="${m.value}">${m.text}</option>`).join('');
-  monthSelect.value = filters.month || '';
-
-  const days = [...new Set(history.map(exp => new Date(exp.dateISO).getDate()))].sort((a, b) => a - b);
-  daySelect.innerHTML = '<option value="">Все дни</option>' + days.map(d => `<option value="${d}">${d.toString().padStart(2, '0')}</option>`).join('');
-  daySelect.value = filters.day || '';
-
-  const banks = [...new Set(history.map(exp => exp.bank))].sort();
-  bankSelect.innerHTML = '<option value="">Все банки</option>' + banks.map(b => `<option value="${b}">${b}</option>`).join('');
-  bankSelect.value = filters.bank || '';
-
-  const categories = [...new Set(history.map(exp => exp.category))].sort();
-  categorySelect.innerHTML = '<option value="">Все категории</option>' + categories.map(c => `<option value="${c}">${c}</option>`).join('');
-  categorySelect.value = filters.category || '';
-
-  filterDiv.appendChild(yearSelect);
-  filterDiv.appendChild(monthSelect);
-  filterDiv.appendChild(daySelect);
-  filterDiv.appendChild(bankSelect);
-  filterDiv.appendChild(categorySelect);
-  filterDiv.appendChild(resetButton);
-
-  const table = document.createElement('table');
-  const thead = document.createElement('thead');
-  const tbody = document.createElement('tbody');
-
-  const headerRow = document.createElement('tr');
-  ['Банк', 'Дата', 'День недели', 'Сумма', 'Категория'].forEach(text => {
-    const th = document.createElement('th');
-    th.textContent = text;
-    headerRow.appendChild(th);
-  });
-  thead.appendChild(headerRow);
-
-  function renderHistory(filteredHistory) {
-    tbody.innerHTML = '';
-    filteredHistory.forEach(exp => {
-      const row = document.createElement('tr');
-      [exp.bank, exp.dateStr, exp.dayOfWeek, `${exp.amount.toFixed(2)} ₽`, exp.category].forEach(text => {
-        const td = document.createElement('td');
-        td.textContent = text;
-        row.appendChild(td);
-      });
-      tbody.appendChild(row);
-    });
-  }
-
-  function filterAndSortHistory() {
-    let filteredHistory = [...history];
-
-    filters.year = yearSelect.value;
-    filters.month = monthSelect.value;
-    filters.day = daySelect.value;
-    filters.bank = bankSelect.value;
-    filters.category = categorySelect.value;
-
-    if (filters.year) {
-      filteredHistory = filteredHistory.filter(exp => new Date(exp.dateISO).getFullYear() == filters.year);
-    }
-    if (filters.month) {
-      filteredHistory = filteredHistory.filter(exp => new Date(exp.dateISO).getMonth() + 1 == filters.month);
-    }
-    if (filters.day) {
-      filteredHistory = filteredHistory.filter(exp => new Date(exp.dateISO).getDate() == filters.day);
-    }
-    if (filters.bank) {
-      filteredHistory = filteredHistory.filter(exp => exp.bank === filters.bank);
-    }
-    if (filters.category) {
-      filteredHistory = filteredHistory.filter(exp => exp.category === filters.category);
-    }
-
-    filteredHistory.sort((a, b) => new Date(b.dateISO) - new Date(a.dateISO));
-
-    localStorage.setItem('historyFilters', JSON.stringify(filters));
-    renderHistory(filteredHistory);
-    renderCategories();
-  }
-
-  resetButton.addEventListener('click', () => {
-    yearSelect.value = '';
-    monthSelect.value = '';
-    daySelect.value = '';
-    bankSelect.value = '';
-    categorySelect.value = '';
-    localStorage.removeItem('historyFilters');
-    filterAndSortHistory();
-  });
-
-  [yearSelect, monthSelect, daySelect, bankSelect, categorySelect].forEach(select => {
-    select.addEventListener('change', filterAndSortHistory);
-  });
-
-  table.appendChild(thead);
-  table.appendChild(tbody);
-
-  // Добавляем обработку касаний для блокировки диагональной прокрутки
-  table.addEventListener('touchstart', (e) => {
-    const touch = e.touches[0];
-    startX = touch.clientX;
-    startY = touch.clientY;
-    scrollDirection = null; // Сбрасываем направление
-  }, { passive: true });
-
-  table.addEventListener('touchmove', (e) => {
-    if (!scrollDirection) {
-      const touch = e.touches[0];
-      const deltaX = Math.abs(touch.clientX - startX);
-      const deltaY = Math.abs(touch.clientY - startY);
-
-      // Определяем направление движения (порог 5 пикселей)
-      if (deltaX > deltaY && deltaX > 5) {
-        scrollDirection = 'horizontal';
-        table.style.touchAction = 'pan-x'; // Только горизонтальная прокрутка
-      } else if (deltaY > deltaX && deltaY > 5) {
-        scrollDirection = 'vertical';
-        table.style.touchAction = 'pan-y'; // Только вертикальная прокрутка
-      }
-    }
-  }, { passive: true });
-
-  table.addEventListener('touchend', () => {
-    table.style.touchAction = 'auto'; // Сбрасываем ограничение
-    scrollDirection = null;
-  });
-
-  modal.appendChild(closeBtn);
-  modal.appendChild(filterDiv);
-  modal.appendChild(table);
-  document.body.appendChild(modal);
-
-  filterAndSortHistory();
-
-  const overlayHandler = () => {
-    overlay.style.display = 'none';
-    modal.remove();
-    overlay.removeEventListener('click', overlayHandler);
-    renderCategories();
-  };
-  overlay.addEventListener('click', overlayHandler);
-}
-
-    function cleanOldExpenses() {
-      const history = JSON.parse(localStorage.getItem('expensesHistory')) || [];
-      const twelveMonthsAgo = new Date();
-      twelveMonthsAgo.setMonth(twelveMonthsAgo.getMonth() - 12);
-      const recent = history.filter(exp => new Date(exp.dateISO) >= twelveMonthsAgo);
-      localStorage.setItem('expensesHistory', JSON.stringify(recent));
-    }
-
-    function showRenameField(button, index) {
-      const existing = button.parentNode.querySelector('.rename-container');
-      if (existing) existing.remove();
-
-      const container = document.createElement('div');
-      container.className = 'rename-container';
-
-      const input = document.createElement('input');
-      const currentName = JSON.parse(localStorage.getItem('categories'))[index].name;
-      input.type = 'text';
-      input.value = currentName.length > 15 ? currentName.slice(0,15) : currentName;
-      input.maxLength = 15;
-
-      const saveBtn = document.createElement('button');
-      saveBtn.textContent = 'Сохранить';
-      saveBtn.onclick = () => {
-        let newName = input.value.trim();
-        if (newName.length > 15) newName = newName.slice(0,15);
-        if (newName) {
-          updateCategory(index, newName);
-          renderCategories();
+        let particles = [];
+        class Particle {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.size = Math.random() * 2 + 2;
+                this.speedX = (Math.random() - 0.5) * 2;
+                this.speedY = Math.random() * -2 - 1;
+                this.alpha = 1;
+                const hue = Math.random() * 30 + 20;
+                this.color = `hsl(${hue}, 100%, 50%)`;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.alpha -= 0.02;
+                this.size *= 0.95;
+            }
+            draw() {
+                ctx.globalAlpha = this.alpha;
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.ellipse(this.x, this.y, this.size, this.size * 0.3, 0, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.globalAlpha = 1;
+            }
         }
-      };
 
-      container.appendChild(input);
-      container.appendChild(saveBtn);
+        const header = document.querySelector('header');
+        header.addEventListener('pointermove', e => {
+            for (let i = 0; i < 3; i++) particles.push(new Particle(e.clientX, e.clientY));
+        });
 
-      button.parentNode.insertBefore(container, button.nextSibling);
-    }
-
-    function getStartOfWeek() {
-      const now = new Date();
-      const day = now.getDay();
-      const diff = now.getDate() - day + (day === 0 ? -6 : 1);
-      const monday = new Date(now.setDate(diff));
-      monday.setHours(0,0,0,0);
-      return monday;
-    }
-
-    function calculateWeeklyExpenses() {
-      const filteredHistory = getFilteredHistory();
-      const startOfWeek = getStartOfWeek();
-      let weeklyTotal = 0;
-
-      filteredHistory.forEach(exp => {
-        const updateDate = new Date(exp.dateISO);
-        if (updateDate >= startOfWeek) {
-          weeklyTotal += exp.amount;
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach((p, i) => {
+                p.update();
+                p.draw();
+                if (p.alpha <= 0) particles.splice(i, 1);
+            });
+            requestAnimationFrame(animateParticles);
         }
-      });
+        animateParticles();
 
-      localStorage.setItem('weeklyTotal', weeklyTotal.toString());
-
-      const weeklyElem = document.getElementById('weeklyExpenses');
-      if (weeklyElem) {
-        weeklyElem.textContent = `Еженедельные расходы: ${weeklyTotal.toFixed(2)} ₽`;
-      }
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/service-worker.js')
-          .then(registration => console.log('SW registered: ', registration))
-          .catch(error => console.log('SW registration failed: ', error));
-      }
-
-      if (!localStorage.getItem('weeklyTotal')) {
-        localStorage.setItem('weeklyTotal', '0');
-      }
-
-      cleanOldExpenses();
-      autoResetMonthlyExpenses();
-      autoResetWeeklyExpenses();
-      initCards();
-      showSection('expenses');
-      renderCategories();
-    });
-
-    const canvas = document.getElementById('sparkCanvas');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    window.addEventListener('scroll', () => {
-      const scrollTop = window.scrollY || document.documentElement.scrollTop;
-      const docHeight = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight) - window.innerHeight;
-      const scrollPercent = docHeight > 0 ? scrollTop / docHeight : 0;
-      
-      const maxHeight = window.innerHeight * 0.4;
-      const scrollBar = document.getElementById('scrollBar');
-      if(scrollBar) {
-        scrollBar.style.top = '0';
-        scrollBar.style.height = `${scrollPercent * maxHeight}px`;
-      }
-    });
-
-    let particles = [];
-    class Particle {
-      constructor(x, y) {
-        this.x = x;
-        this.y = y;
-        this.size = Math.random() * 2 + 2;
-        this.speedX = (Math.random() - 0.5) * 2;
-        this.speedY = Math.random() * -2 - 1;
-        this.alpha = 1;
-        const hue = Math.random() * 30 + 20;
-        this.color = `hsl(${hue}, 100%, 50%)`;
-      }
-      update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-        this.alpha -= 0.02;
-        this.size *= 0.95;
-      }
-      draw() {
-        ctx.globalAlpha = this.alpha;
-        ctx.fillStyle = this.color;
-        ctx.beginPath();
-        ctx.ellipse(this.x, this.y, this.size, this.size * 0.3, 0, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.globalAlpha = 1;
-      }
-    }
-
-    const header = document.querySelector('header');
-    header.addEventListener('pointermove', e => {
-      for (let i = 0; i < 3; i++) particles.push(new Particle(e.clientX, e.clientY));
-    });
-
-    function animateParticles() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach((p, i) => {
-        p.update();
-        p.draw();
-        if (p.alpha <= 0) particles.splice(i, 1);
-      });
-      requestAnimationFrame(animateParticles);
-    }
-    animateParticles();
-
-    function toggleSubmenu() {
-      const submenu = document.getElementById('settingsSubmenu');
-      const adminSubmenu = document.getElementById('adminSubmenu');
-
-      if (submenu.style.display === 'block') {
-        submenu.style.display = 'none';
-      } else {
-        submenu.style.display = 'block';
-        if (adminSubmenu) adminSubmenu.style.display = 'none';
-      }
-    }
-
-    function toggleAdminSubmenu() {
-      const adminSubmenu = document.getElementById('adminSubmenu');
-      const submenu = document.getElementById('settingsSubmenu');
-
-      if (adminSubmenu.style.display === 'block') {
-        adminSubmenu.style.display = 'none';
-      } else {
-        adminSubmenu.style.display = 'block';
-        if (submenu) submenu.style.display = 'none';
-      }
-    }
-
-    function clearLimits() {
-      let categories = JSON.parse(localStorage.getItem('categories')) || [];
-      categories.forEach(c => c.limit = 0);
-      localStorage.setItem('categories', JSON.stringify(categories));
-      alert("Все лимиты удалены");
-      renderCategories();
-    }
-
-    function clearExpenses() {
-      let categories = JSON.parse(localStorage.getItem('categories')) || [];
-      categories.forEach(c => c.amount = 0);
-      localStorage.setItem('categories', JSON.stringify(categories));
-      localStorage.setItem('expensesHistory', JSON.stringify([]));
-      alert("Все расходы удалены");
-      renderCategories();
-    }
-
-    function updateClock() {
-      const now = new Date();
-      const days = ['Воскресенье','Понедельник','Вторник','Среда','Четверг','Пятница','Суббота'];
-      const weekday = days[now.getDay()];
-      const dateStr = now.toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' });
-      const timeStr = now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-      document.getElementById('clock').textContent = `${weekday}, ${dateStr} ${timeStr}`;
-    }
-
-    setInterval(updateClock, 1000);
-    updateClock();
-
-    function autoResetMonthlyExpenses() {
-      const today = new Date();
-      const currentMonth = today.getMonth();
-      const currentYear = today.getFullYear();
-
-      const lastReset = JSON.parse(localStorage.getItem('lastResetMonth'));
-
-      if (today.getDate() === 1 && (!lastReset || lastReset.month !== currentMonth || lastReset.year !== currentYear)) {
-        let categories = JSON.parse(localStorage.getItem('categories')) || [];
-        categories.forEach(c => c.amount = 0);
-        localStorage.setItem('categories', JSON.stringify(categories));
-        localStorage.setItem('lastResetMonth', JSON.stringify({month: currentMonth, year: currentYear}));
-        alert("Новый месяц! Все расходы обнулены.");
-        renderCategories();
-      }
-    }
-
-    function autoResetWeeklyExpenses() {
-      const today = new Date();
-      const day = today.getDay();
-
-      if (day === 1) {
-        const mondayDateStr = today.toISOString().slice(0,10);
-        const lastWeeklyReset = localStorage.getItem('lastWeeklyReset');
-
-        if (lastWeeklyReset !== mondayDateStr) {
-          localStorage.setItem('weeklyTotal', '0');
-          localStorage.setItem('lastWeeklyReset', mondayDateStr);
-          calculateWeeklyExpenses();
+        function toggleSubmenu() {
+            const submenu = document.getElementById('settingsSubmenu');
+            const adminSubmenu = document.getElementById('adminSubmenu');
+            if (submenu.style.display === 'block') {
+                submenu.style.display = 'none';
+            } else {
+                submenu.style.display = 'block';
+                if (adminSubmenu) adminSubmenu.style.display = 'none';
+            }
         }
-      }
-    }
 
-    window.addEventListener('scroll', () => {
-      const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const scrollPercent = docHeight > 0 ? scrollTop / docHeight : 0;
-      const maxHeight = 50;
-      const scrollBar = document.getElementById('scrollBar');
-      if(scrollBar) scrollBar.style.height = `${scrollPercent * maxHeight}px`;
-    });
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js').then(reg => {
-    reg.addEventListener('updatefound', () => {
-      const newWorker = reg.installing;
-      newWorker.addEventListener('statechange', () => {
-        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-          // Новая версия доступна, предложить пользователю обновить
-          alert('Доступна новая версия приложения! Перезагрузите страницу.');
+        function toggleAdminSubmenu() {
+            const adminSubmenu = document.getElementById('adminSubmenu');
+            const submenu = document.getElementById('settingsSubmenu');
+            if (adminSubmenu.style.display === 'block') {
+                adminSubmenu.style.display = 'none';
+            } else {
+                adminSubmenu.style.display = 'block';
+                if (submenu) submenu.style.display = 'none';
+            }
         }
-      });
-    });
-  });
-}
-  </script>
+
+        function clearLimits() {
+            let categories = JSON.parse(localStorage.getItem('categories')) || [];
+            categories.forEach(c => c.limit = 0);
+            localStorage.setItem('categories', JSON.stringify(categories));
+            alert("Все лимиты удалены");
+            renderCategories();
+        }
+
+        function clearExpenses() {
+            let categories = JSON.parse(localStorage.getItem('categories')) || [];
+            categories.forEach(c => c.amount = 0);
+            localStorage.setItem('categories', JSON.stringify(categories));
+            localStorage.setItem('expensesHistory', JSON.stringify([]));
+            alert("Все расходы удалены");
+            renderCategories();
+        }
+
+        function updateClock() {
+            const now = new Date();
+            const days = ['Воскресенье','Понедельник','Вторник','Среда','Четверг','Пятница','Суббота'];
+            const weekday = days[now.getDay()];
+            const dateStr = now.toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' });
+            const timeStr = now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            document.getElementById('clock').textContent = `${weekday}, ${dateStr} ${timeStr}`;
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        function autoResetMonthlyExpenses() {
+            const today = new Date();
+            const currentMonth = today.getMonth();
+            const currentYear = today.getFullYear();
+            const lastReset = JSON.parse(localStorage.getItem('lastResetMonth'));
+            if (today.getDate() === 1 && (!lastReset || lastReset.month !== currentMonth || lastReset.year !== currentYear)) {
+                let categories = JSON.parse(localStorage.getItem('categories')) || [];
+                categories.forEach(c => c.amount = 0);
+                localStorage.setItem('categories', JSON.stringify(categories));
+                localStorage.setItem('lastResetMonth', JSON.stringify({month: currentMonth, year: currentYear}));
+                alert("Новый месяц! Все расходы обнулены.");
+                renderCategories();
+            }
+        }
+
+        function autoResetWeeklyExpenses() {
+            const today = new Date();
+            const day = today.getDay();
+            if (day === 1) {
+                const mondayDateStr = today.toISOString().slice(0,10);
+                const lastWeeklyReset = localStorage.getItem('lastWeeklyReset');
+                if (lastWeeklyReset !== mondayDateStr) {
+                    localStorage.setItem('weeklyTotal', '0');
+                    localStorage.setItem('lastWeeklyReset', mondayDateStr);
+                    calculateWeeklyExpenses();
+                }
+            }
+        }
+
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = docHeight > 0 ? scrollTop / docHeight : 0;
+            const maxHeight = 50;
+            const scrollBar = document.getElementById('scrollBar');
+            if(scrollBar) scrollBar.style.height = `${scrollPercent * maxHeight}px`;
+        });
+
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js').then(reg => {
+                reg.addEventListener('updatefound', () => {
+                    const newWorker = reg.installing;
+                    newWorker.addEventListener('statechange', () => {
+                        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                            alert('Доступна новая версия приложения! Перезагрузите страницу.');
+                        }
+                    });
+                });
+            });
+        }
+    </script>
 </div>
 </body>
 </html>
