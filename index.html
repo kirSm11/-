@@ -1054,23 +1054,23 @@ nav {
         }
 
         function renderCategories() {
-    const list = document.getElementById('categoriesList');
-    const statsList = document.getElementById('statsCategories');
-    const settingsList = document.getElementById('settingsCategories');
-    list.innerHTML = '';
-    if (statsList) statsList.innerHTML = '';
-    if (settingsList) settingsList.innerHTML = '';
-    let categories = JSON.parse(localStorage.getItem('categories')) || [];
-    const history = JSON.parse(localStorage.getItem('expensesHistory')) || [];
-    const categorySums = {};
-    categories.forEach(cat => {
-        categorySums[cat.name] = { amount: 0, limit: cat.limit, limitEnabled: cat.limitEnabled };
-    });
-    history.forEach(exp => {
-        if (categorySums[exp.category]) {
-            categorySums[exp.category].amount += exp.amount;
-        }
-    });
+            const list = document.getElementById('categoriesList');
+            const statsList = document.getElementById('statsCategories');
+            const settingsList = document.getElementById('settingsCategories');
+            list.innerHTML = '';
+            if (statsList) statsList.innerHTML = '';
+            if (settingsList) settingsList.innerHTML = '';
+            let categories = JSON.parse(localStorage.getItem('categories')) || [];
+            const filteredHistory = getFilteredHistory();
+            const categorySums = {};
+            categories.forEach(cat => {
+                categorySums[cat.name] = { amount: 0, limit: cat.limit, limitEnabled: cat.limitEnabled };
+            });
+            filteredHistory.forEach(exp => {
+                if (categorySums[exp.category]) {
+                    categorySums[exp.category].amount += exp.amount;
+                }
+            });
             categories.forEach((cat, idx) => {
                 const catBtn = document.createElement('button');
                 let displayName = cat.name.length > 15 ? cat.name.slice(0,15) : cat.name;
@@ -1516,31 +1516,32 @@ nav {
             }
 
             function filterAndSortHistory() {
-    let filteredHistory = [...history];
-    filters.year = yearSelect.value;
-    filters.month = monthSelect.value;
-    filters.day = daySelect.value;
-    filters.bank = bankSelect.value;
-    filters.category = categorySelect.value;
-    if (filters.year) {
-        filteredHistory = filteredHistory.filter(exp => new Date(exp.dateISO).getFullYear() == filters.year);
-    }
-    if (filters.month) {
-        filteredHistory = filteredHistory.filter(exp => new Date(exp.dateISO).getMonth() + 1 == filters.month);
-    }
-    if (filters.day) {
-        filteredHistory = filteredHistory.filter(exp => new Date(exp.dateISO).getDate() == filters.day);
-    }
-    if (filters.bank) {
-        filteredHistory = filteredHistory.filter(exp => exp.bank === filters.bank);
-    }
-    if (filters.category) {
-        filteredHistory = filteredHistory.filter(exp => exp.category === filters.category);
-    }
-    filteredHistory.sort((a, b) => new Date(b.dateISO) - new Date(a.dateISO));
-    localStorage.setItem('historyFilters', JSON.stringify(filters));
-    renderHistory(filteredHistory);
-}
+                let filteredHistory = [...history];
+                filters.year = yearSelect.value;
+                filters.month = monthSelect.value;
+                filters.day = daySelect.value;
+                filters.bank = bankSelect.value;
+                filters.category = categorySelect.value;
+                if (filters.year) {
+                    filteredHistory = filteredHistory.filter(exp => new Date(exp.dateISO).getFullYear() == filters.year);
+                }
+                if (filters.month) {
+                    filteredHistory = filteredHistory.filter(exp => new Date(exp.dateISO).getMonth() + 1 == filters.month);
+                }
+                if (filters.day) {
+                    filteredHistory = filteredHistory.filter(exp => new Date(exp.dateISO).getDate() == filters.day);
+                }
+                if (filters.bank) {
+                    filteredHistory = filteredHistory.filter(exp => exp.bank === filters.bank);
+                }
+                if (filters.category) {
+                    filteredHistory = filteredHistory.filter(exp => exp.category === filters.category);
+                }
+                filteredHistory.sort((a, b) => new Date(b.dateISO) - new Date(a.dateISO));
+                localStorage.setItem('historyFilters', JSON.stringify(filters));
+                renderHistory(filteredHistory);
+                renderCategories();
+            }
 
             resetButton.addEventListener('click', () => {
                 yearSelect.value = '';
@@ -1642,14 +1643,15 @@ nav {
         }
 
         function calculateWeeklyExpenses() {
-    const history = JSON.parse(localStorage.getItem('expensesHistory')) || [];
+    const filteredHistory = getFilteredHistory();
     const startOfWeek = getStartOfWeek();
     const categories = JSON.parse(localStorage.getItem('categories')) || [];
     let weeklyTotal = 0;
 
-    history.forEach(exp => {
+    filteredHistory.forEach(exp => {
         const updateDate = new Date(exp.dateISO);
         const category = categories.find(cat => cat.name === exp.category);
+        // Учитываем траты только если категория существует и limitEnabled включен
         if (updateDate >= startOfWeek && category && category.limitEnabled) {
             weeklyTotal += exp.amount;
         }
@@ -1658,7 +1660,7 @@ nav {
     localStorage.setItem('weeklyTotal', weeklyTotal.toString());
     const weeklyElem = document.getElementById('weeklyExpenses');
     if (weeklyElem) {
-        weeklyElem.textContent = `Недельные траты: ${weeklyTotal.toFixed(2)} ₽`;
+        weeklyElem.textContent = `недельные траты: ${weeklyTotal.toFixed(2)} ₽`;
     }
 }
 
