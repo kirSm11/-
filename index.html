@@ -1981,6 +1981,31 @@ function showHistory() {
         overlay.style.display = 'none';
       }
     }
+    <script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/service-worker.js').then(reg => {
+    // Проверяем обновления каждые 10 минут
+    setInterval(() => {
+      reg.update();
+    }, 10 * 60 * 1000);
+
+    // Слушаем обновления
+    reg.addEventListener('updatefound', () => {
+      const newWorker = reg.installing;
+      newWorker.addEventListener('statechange', () => {
+        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+          // Новая версия доступна 💬
+          const userConfirmed = confirm('Доступна новая версия! Обновить сейчас?');
+          if (userConfirmed) {
+            newWorker.postMessage({ type: 'SKIP_WAITING' });
+            window.location.reload();
+          }
+        }
+      });
+    });
+  });
+}
+</script>
   </script>
 </div>
 </body>
