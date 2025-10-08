@@ -1,4 +1,5 @@
-const CACHE_NAME = 'den-g-a-v2'; // ⬅️ поменяй версию при обновлениях
+// === 🧱 Настройки кэша ===
+const CACHE_NAME = 'den-g-a-v3'; // ⬅️ меняй версию при каждом обновлении
 const urlsToCache = [
   '/',
   '/index.html',
@@ -9,19 +10,22 @@ const urlsToCache = [
   'https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap'
 ];
 
-// Кэширование при установке
+// === 🪄 Установка и кэширование ===
 self.addEventListener('install', event => {
-  self.skipWaiting(); // ⚡ сразу активирует новую версию
+  // Сразу активировать новую версию
+  self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => cache.addAll(urlsToCache))
   );
 });
 
-// Очистка старых кэшей
+// === 🧹 Очистка старого кэша ===
 self.addEventListener('activate', event => {
+  // Новая версия сразу берёт контроль
+  clients.claim();
   event.waitUntil(
-    caches.keys().then(keys => 
+    caches.keys().then(keys =>
       Promise.all(
         keys
           .filter(key => key !== CACHE_NAME)
@@ -31,15 +35,24 @@ self.addEventListener('activate', event => {
   );
 });
 
-// Обработка запросов: сначала сеть, потом кэш
+// === ⚡ Основная логика запросов ===
+// Сначала пробуем сеть, если не получилось — даём кэш
 self.addEventListener('fetch', event => {
   event.respondWith(
     fetch(event.request)
       .then(response => {
+        // Обновляем кэш свежей копией
         const clone = response.clone();
         caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
         return response;
       })
       .catch(() => caches.match(event.request))
   );
+});
+
+// === 🔔 Обновление приложения ===
+self.addEventListener('message', event => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
 });
