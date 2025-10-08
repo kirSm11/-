@@ -1999,6 +1999,19 @@ function showHistory() {
       const scrollBar = document.getElementById('scrollBar');
       if(scrollBar) scrollBar.style.height = `${scrollPercent * maxHeight}px`;
     });
+    if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').then(reg => {
+    reg.addEventListener('updatefound', () => {
+      const newWorker = reg.installing;
+      newWorker.addEventListener('statechange', () => {
+        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+          // Новая версия доступна, предложить пользователю обновить
+          alert('Доступна новая версия приложения! Перезагрузите страницу.');
+        }
+      });
+    });
+  });
+}
   </script>
 </div>
 </body>
