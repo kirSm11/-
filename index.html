@@ -940,7 +940,7 @@ nav {
 
         function saveCategory(name) {
             let categories = JSON.parse(localStorage.getItem('categories')) || [];
-            categories.push({name: name, amount: 0, limit: 0, lastUpdate: null, limitEnabled: false});
+            categories.push({name: name, amount: 0, limit: 0, lastUpdate: null});
             localStorage.setItem('categories', JSON.stringify(categories));
         }
 
@@ -1633,14 +1633,10 @@ nav {
         function calculateWeeklyExpenses() {
             const filteredHistory = getFilteredHistory();
             const startOfWeek = getStartOfWeek();
-            const categories = JSON.parse(localStorage.getItem('categories')) || [];
-            const enabledCategories = categories
-                .filter(cat => cat.limitEnabled === true)
-                .map(cat => cat.name);
             let weeklyTotal = 0;
             filteredHistory.forEach(exp => {
                 const updateDate = new Date(exp.dateISO);
-                if (updateDate >= startOfWeek && enabledCategories.includes(exp.category)) {
+                if (updateDate >= startOfWeek) {
                     weeklyTotal += exp.amount;
                 }
             });
@@ -1753,10 +1749,7 @@ nav {
 
         function clearLimits() {
             let categories = JSON.parse(localStorage.getItem('categories')) || [];
-            categories.forEach(c => {
-                c.limit = 0;
-                c.limitEnabled = false;
-            });
+            categories.forEach(c => c.limit = 0);
             localStorage.setItem('categories', JSON.stringify(categories));
             alert("Все лимиты удалены");
             renderCategories();
@@ -1767,7 +1760,6 @@ nav {
             categories.forEach(c => c.amount = 0);
             localStorage.setItem('categories', JSON.stringify(categories));
             localStorage.setItem('expensesHistory', JSON.stringify([]));
-            localStorage.setItem('weeklyTotal', '0');
             alert("Все расходы удалены");
             renderCategories();
         }
