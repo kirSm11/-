@@ -24,10 +24,7 @@
             z-index: 999;
             display: none;
         }
-        .card-stack-btn.expanded {
-            z-index: 1001;
-        }
-        /* Карта */
+        .card-stack-btn.expanded { z-index: 1001; }
         .card {
             position: absolute;
             width: 80px;
@@ -46,16 +43,14 @@
             transition: transform 0.4s cubic-bezier(0.25, 1.5, 0.5, 1), box-shadow 0.4s;
             user-select: none;
         }
-        /* Цвета и подписи карт */
         .card[data-bank="Сбер"] { background-color: #0f9d58; }
         .card[data-bank="Яндекс"] { background-color: #ff6eb4; }
-        .card[data-bank="Тинькофф"] { background-color: #FFD700; color:#000; }
+        .card[data-bank="Тинькофф"] { background-color: #FFD700; color: #000; }
         .card[data-bank="Альфа"] { background-color: #FF0000; }
         .card[data-bank="ВТБ"] { background-color: #1E90FF; }
-        .card[data-bank="Халва"] { background-color: #A9A9A9; color:#000; }
+        .card[data-bank="Халва"] { background-color: #A9A9A9; color: #000; }
         .card[data-bank="Уралсиб"] { background-color: #800080; }
         .card[data-bank="Другие"] { background-color: #000000; }
-        /* Положение карт в сложенном состоянии */
         .card-stack-btn:not(.expanded) .card:nth-child(1) { transform: translate(0, 0) rotate(0deg); z-index: 8; }
         .card-stack-btn:not(.expanded) .card:nth-child(2) { transform: translate(0, -5px) rotate(0deg); z-index: 7; }
         .card-stack-btn:not(.expanded) .card:nth-child(3) { transform: translate(0, -10px) rotate(0deg); z-index: 6; }
@@ -64,10 +59,7 @@
         .card-stack-btn:not(.expanded) .card:nth-child(6) { transform: translate(0, -25px) rotate(0deg); z-index: 3; }
         .card-stack-btn:not(.expanded) .card:nth-child(7) { transform: translate(0, -30px) rotate(0deg); z-index: 2; }
         .card-stack-btn:not(.expanded) .card:nth-child(8) { transform: translate(0, -35px) rotate(0deg); z-index: 1; }
-        /* Положение карт при раскрытии */
-        .card-stack-btn.expanded .card {
-            transition: transform 0.4s cubic-bezier(0.25, 1.5, 0.5, 1), box-shadow 0.4s;
-        }
+        .card-stack-btn.expanded .card { transition: transform 0.4s cubic-bezier(0.25, 1.5, 0.5, 1), box-shadow 0.4s; }
         .card-stack-btn.expanded .card:nth-child(1) { transform: translate(0, 0px) rotate(0deg) scale(1.05); z-index: 1; }
         .card-stack-btn.expanded .card:nth-child(2) { transform: translate(0, -70px) rotate(-5deg) scale(1.05); z-index: 2; }
         .card-stack-btn.expanded .card:nth-child(3) { transform: translate(0, -140px) rotate(3deg) scale(1.05); z-index: 3; }
@@ -87,10 +79,7 @@
             pointer-events: none;
             transition: opacity 0.3s;
         }
-        .card-stack-btn.expanded .card .bank-buttons {
-            opacity: 0;
-            pointer-events: auto;
-        }
+        .card-stack-btn.expanded .card .bank-buttons { opacity: 0; pointer-events: auto; }
         .bank-buttons button {
             background: none;
             border: none;
@@ -101,11 +90,7 @@
             cursor: pointer;
             transition: opacity 0.3s, color 0.3s;
         }
-        .card-stack-btn.expanded .card .bank-buttons button {
-            opacity: 0;
-            color: transparent;
-        }
-        /* Оверлей с усиленным затемнением */
+        .card-stack-btn.expanded .card .bank-buttons button { opacity: 0; color: transparent; }
         #overlay {
             position: fixed;
             top: 0;
@@ -208,9 +193,7 @@
             background: linear-gradient(135deg, #A8E6A2, #45A049);
             color: white;
         }
-        button:hover {
-            background-color: #0b7dda;
-        }
+        button:hover { background-color: #0b7dda; }
         @keyframes spring {
             0% { transform: scale(1); }
             10% { transform: scale(0.7); }
@@ -224,25 +207,9 @@
             90% { transform: scale(0.99); }
             100% { transform: scale(1); }
         }
-        .springing {
-            animation: spring 0.95s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-        }
-        /* Animation for button press */
-        @keyframes buttonPress {
-            0% { transform: scale(1); }
-            50% { transform: scale(0.95); }
-            100% { transform: scale(1); }
-        }
-        .pressed {
-            animation: buttonPress 0.2s ease-out;
-        }
-        main {
-            padding: 20px;
-            text-align: center;
-        }
-        section {
-            display: none;
-        }
+        .springing { animation: spring 0.95s cubic-bezier(0.68, -0.55, 0.27, 1.55); }
+        main { padding: 20px; text-align: center; }
+        section { display: none; }
         #categoriesList {
             display: block;
             margin-top: 15px;
@@ -292,12 +259,8 @@
             border-radius: 38px;
             transition: background 0.2s;
         }
-        .action-modal button.rename {
-            background: #2196F3;
-        }
-        .action-modal button:hover {
-            opacity: 0.85;
-        }
+        .action-modal button.rename { background: #2196F3; }
+        .action-modal button:hover { opacity: 0.85; }
         @keyframes fadeIn {
             from { transform: scale(0.8); opacity: 0; }
             to { transform: scale(1); opacity: 1; }
@@ -313,9 +276,7 @@
             width: 60%;
             max-width: 200px;
         }
-        .rename-container button {
-            padding: 5px 10px;
-        }
+        .rename-container button { padding: 5px 10px; }
         .placeholder {
             border: 2px dashed #2196F3;
             margin-bottom: 10px;
@@ -366,9 +327,7 @@
             cursor: pointer;
             transition: background 0.3s;
         }
-        #settingsCategories button:hover {
-            background: #0b7dda;
-        }
+        #settingsCategories button:hover { background: #0b7dda; }
         #settings button {
             display: block;
             width: 100%;
@@ -382,9 +341,7 @@
             cursor: pointer;
             transition: background 0.3s;
         }
-        #settings button:hover {
-            background: #0b7dda;
-        }
+        #settings button:hover { background: #0b7dda; }
         .totals-box {
             background: #4CAF50;
             border-radius: 12px;
@@ -471,12 +428,8 @@
             transition: .3s;
             border-radius: 50%;
         }
-        input:checked + .slider {
-            background-color: #4CAF50;
-        }
-        input:checked + .slider:before {
-            transform: translateX(20px);
-        }
+        input:checked + .slider { background-color: #4CAF50; }
+        input:checked + .slider:before { transform: translateX(20px); }
         .limit-badge {
             display: inline-block;
             padding: 4px 10px;
@@ -500,17 +453,13 @@
             background: #4CAF50;
             color: white;
         }
-        .limit-badge:active {
-            animation: pressAnimation 0.2s ease-out;
-        }
+        .limit-badge:active { animation: pressAnimation 0.2s ease-out; }
         @keyframes pressAnimation {
             0% { transform: scale(1); background: #d0d0d0; }
             50% { transform: scale(0.9); background: #b0b0b0; }
             100% { transform: scale(1); background: #f0f0f0; }
         }
-        .limit-badge.active:active {
-            animation: pressAnimationActive 0.2s ease-out;
-        }
+        .limit-badge.active:active { animation: pressAnimationActive 0.2s ease-out; }
         @keyframes pressAnimationActive {
             0% { transform: scale(1); background: #4CAF50; }
             50% { transform: scale(0.9); background: #3d8b40; }
@@ -532,14 +481,8 @@
             white-space: nowrap;
             flex: 1;
         }
-        .limit-badge {
-            margin: 0 10px;
-            min-width: 60px;
-            text-align: center;
-        }
-        .settings-row .switch {
-            flex-shrink: 0;
-        }
+        .limit-badge { margin: 0 10px; min-width: 60px; text-align: center; }
+        .settings-row .switch { flex-shrink: 0; }
         #background {
             position: fixed;
             top: 0;
@@ -549,15 +492,7 @@
             background: white;
             z-index: -1;
         }
-        body,
-        .app-container,
-        header,
-        nav,
-        main,
-        section,
-        #statsCategories,
-        #settingsSubmenu,
-        #adminSubmenu {
+        body, .app-container, header, nav, main, section, #statsCategories, #settingsSubmenu, #adminSubmenu {
             background: transparent !important;
             box-shadow: none !important;
         }
@@ -571,15 +506,6 @@
             backdrop-filter: blur(10px);
             box-shadow: none !important;
         }
-        #background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: white;
-            z-index: -1;
-        }
         #header-layer header {
             background: linear-gradient(135deg, #E6FFE6, #45A049);
             color: #0b5ea8;
@@ -591,9 +517,7 @@
             font-family: 'MedievalSharp', cursive;
             box-shadow: 0 3px 10px rgba(0,0,0,0.2);
         }
-        nav {
-            margin-top: 50px;
-        }
+        nav { margin-top: 50px; }
         #header-layer {
             position: relative;
             width: 100%;
@@ -631,7 +555,6 @@
             pointer-events: none;
             transition: height 0.1s ease-out;
         }
-        /* Стили для модалки истории */
         .history-modal {
             position: fixed;
             top: 50%;
@@ -661,8 +584,7 @@
             touch-action: auto;
             -webkit-overflow-scrolling: touch;
         }
-        .history-modal th,
-        .history-modal td {
+        .history-modal th, .history-modal td {
             border: 1px solid #ddd;
             padding: 8px;
             text-align: left;
@@ -685,9 +607,7 @@
             cursor: pointer;
             width: 100%;
         }
-        .history-modal button:hover {
-            background: #45a049;
-        }
+        .history-modal button:hover { background: #45a049; }
         .history-filter {
             margin-bottom: 15px;
             display: flex;
@@ -717,23 +637,16 @@
             justify-content: center;
             transition: color 0.2s;
         }
-        .close-btn:hover {
-            color: #f44336;
-        }
-        .close-btn::before,
-        .close-btn::after {
+        .close-btn:hover { color: #f44336; }
+        .close-btn::before, .close-btn::after {
             content: '';
             position: absolute;
             width: 16px;
             height: 2px;
             background: currentColor;
         }
-        .close-btn::before {
-            transform: rotate(45deg);
-        }
-        .close-btn::after {
-            transform: rotate(-45deg);
-        }
+        .close-btn::before { transform: rotate(45deg); }
+        .close-btn::after { transform: rotate(-45deg); }
         #hawkBlocker {
             position: fixed;
             top: 0;
@@ -744,15 +657,9 @@
             z-index: 9998;
             pointer-events: auto;
         }
-        #hawkBlocker:not(.hawk-mode) {
-            display: none;
-        }
-        #categoriesList button {
-            pointer-events: auto;
-        }
-        #exitHawkBtn {
-            pointer-events: auto;
-        }
+        #hawkBlocker:not(.hawk-mode) { display: none; }
+        #categoriesList button { pointer-events: auto; }
+        #exitHawkBtn { pointer-events: auto; }
     </style>
 </head>
 <body>
@@ -949,13 +856,13 @@
 
             function saveCategory(name) {
                 let categories = JSON.parse(localStorage.getItem('categories')) || [];
-                categories.push({name: name, amount: 0, limit: 0, lastUpdate: null});
+                categories.push({ name: name, amount: 0, limit: 0, limitEnabled: false, lastUpdate: null });
                 localStorage.setItem('categories', JSON.stringify(categories));
             }
 
             function updateCategory(index, newName) {
                 let categories = JSON.parse(localStorage.getItem('categories')) || [];
-                categories[index].name = newName.length > 15 ? newName.slice(0,15) : newName;
+                categories[index].name = newName.length > 15 ? newName.slice(0, 15) : newName;
                 localStorage.setItem('categories', JSON.stringify(categories));
             }
 
@@ -971,7 +878,6 @@
                     console.warn('Контейнер newCategoryContainer не найден');
                     return;
                 }
-
                 container.innerHTML = '';
                 const form = document.createElement('form');
                 form.style.display = 'flex';
@@ -1041,6 +947,9 @@
                     if (sortField === 'dateISO') {
                         valueA = new Date(a.dateISO);
                         valueB = new Date(b.dateISO);
+                    } else if (sortField === 'amount') {
+                        valueA = a.amount;
+                        valueB = b.amount;
                     } else {
                         valueA = a[sortField].toLowerCase();
                         valueB = b[sortField].toLowerCase();
@@ -1070,7 +979,7 @@
                 });
                 categories.forEach((cat, idx) => {
                     const catBtn = document.createElement('button');
-                    let displayName = cat.name.length > 15 ? cat.name.slice(0,15) : cat.name;
+                    let displayName = cat.name.length > 15 ? cat.name.slice(0, 15) : cat.name;
                     catBtn.textContent = displayName;
                     let pressTimer;
                     let isDragging = false;
@@ -1083,12 +992,9 @@
 
                     function startPress(e) {
                         if (!dragEnabled) {
-                            // Increased press duration to 500ms for more deliberate interaction
                             pressTimer = setTimeout(() => {
                                 showActionModal(catBtn, currentIndex);
-                            }, 500);
-                            // Add pressed animation
-                            catBtn.classList.add('pressed');
+                            }, 1);
                             return;
                         }
                         if (e.type === 'touchstart') e.preventDefault();
@@ -1096,7 +1002,7 @@
                         isDragging = false;
                         pressTimer = setTimeout(() => {
                             if (!isDragging) showActionModal(catBtn, currentIndex);
-                        }, 500);
+                        }, 10);
 
                         function onMove(ev) {
                             const moveY = ev.clientY || (ev.touches && ev.touches[0].clientY);
@@ -1128,7 +1034,6 @@
                             document.removeEventListener('mouseup', endDrag);
                             document.removeEventListener('touchend', endDrag);
                             catBtn.classList.remove('dragging');
-                            catBtn.classList.remove('pressed');
                             clearTimeout(pressTimer);
                         }
 
@@ -1140,7 +1045,6 @@
 
                     function cancelPress() {
                         clearTimeout(pressTimer);
-                        catBtn.classList.remove('pressed');
                     }
 
                     list.appendChild(catBtn);
@@ -1218,29 +1122,24 @@
                                 else limitBadge.classList.remove('active');
                             }
                             calculateWeeklyExpenses();
+                            renderCategories();
                         });
                         settingsList.appendChild(row);
                     }
                 });
-
                 renderChart(Object.keys(categorySums).map(name => ({
                     name,
                     amount: categorySums[name].amount,
                     limit: categorySums[name].limit
                 })));
-
                 let total = Object.values(categorySums).reduce((sum, c) => sum + c.amount, 0);
                 let totalLimits = Object.values(categorySums).reduce((sum, c) => sum + (c.limit || 0), 0);
                 const totalContainer = document.getElementById('totalExpenses');
                 if (totalContainer) {
                     totalContainer.innerHTML = `<p>Всего расходов: ${total.toFixed(2)} ₽</p>
-                    <p id="weeklyExpenses">Еженедельные расходы: 0 ₽</p>`;
+                        <p id="weeklyExpenses">Еженедельные расходы: 0 ₽</p>`;
                 }
-                const weeklyElem = document.getElementById('weeklyExpenses');
-                if (weeklyElem) {
-                    let weeklyTotal = parseFloat(localStorage.getItem('weeklyTotal')) || 0;
-                    weeklyElem.textContent = `Еженедельные расходы: ${weeklyTotal.toFixed(2)} ₽`;
-                }
+                calculateWeeklyExpenses();
                 const totalLimitsContainer = document.getElementById('totalLimits');
                 if (totalLimitsContainer) {
                     totalLimitsContainer.textContent = `Всего лимитов: ${totalLimits.toFixed(2)} ₽`;
@@ -1262,9 +1161,9 @@
                         datasets: [{
                             data: data,
                             backgroundColor: [
-                                '#FF6384','#36A2EB','#FFCE56',
-                                '#4CAF50','#FF9800','#9C27B0',
-                                '#00BCD4','#E91E63'
+                                '#FF6384', '#36A2EB', '#FFCE56',
+                                '#4CAF50', '#FF9800', '#9C27B0',
+                                '#00BCD4', '#E91E63'
                             ],
                             borderWidth: 1
                         }]
@@ -1326,7 +1225,7 @@
                         const bank = localStorage.getItem('selectedBank') || 'Неизвестно';
                         const now = new Date();
                         const dateStr = now.toLocaleDateString('ru-RU');
-                        const days = ['Воскресенье','Понедельник','Вторник','Среда','Четверг','Пятница','Суббота'];
+                        const days = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
                         const dayOfWeek = days[now.getDay()];
                         const dateISO = now.toISOString();
                         let history = JSON.parse(localStorage.getItem('expensesHistory')) || [];
@@ -1459,6 +1358,10 @@
                 bankSelect.id = 'bankFilter';
                 const categorySelect = document.createElement('select');
                 categorySelect.id = 'categoryFilter';
+                const sortFieldSelect = document.createElement('select');
+                sortFieldSelect.id = 'sortField';
+                const sortOrderSelect = document.createElement('select');
+                sortOrderSelect.id = 'sortOrder';
                 const resetButton = document.createElement('button');
                 resetButton.textContent = 'Сбросить фильтры';
                 resetButton.style.padding = '8px 16px';
@@ -1487,11 +1390,25 @@
                 const categories = [...new Set(history.map(exp => exp.category))].sort();
                 categorySelect.innerHTML = '<option value="">Все категории</option>' + categories.map(c => `<option value="${c}">${c}</option>`).join('');
                 categorySelect.value = filters.category || '';
+                sortFieldSelect.innerHTML = `
+                    <option value="dateISO">Дата</option>
+                    <option value="bank">Банк</option>
+                    <option value="category">Категория</option>
+                    <option value="amount">Сумма</option>
+                `;
+                sortFieldSelect.value = filters.sortField || 'dateISO';
+                sortOrderSelect.innerHTML = `
+                    <option value="desc">По убыванию</option>
+                    <option value="asc">По возрастанию</option>
+                `;
+                sortOrderSelect.value = filters.sortOrder || 'desc';
                 filterDiv.appendChild(yearSelect);
                 filterDiv.appendChild(monthSelect);
                 filterDiv.appendChild(daySelect);
                 filterDiv.appendChild(bankSelect);
                 filterDiv.appendChild(categorySelect);
+                filterDiv.appendChild(sortFieldSelect);
+                filterDiv.appendChild(sortOrderSelect);
                 filterDiv.appendChild(resetButton);
                 const table = document.createElement('table');
                 const thead = document.createElement('thead');
@@ -1524,6 +1441,8 @@
                     filters.day = daySelect.value;
                     filters.bank = bankSelect.value;
                     filters.category = categorySelect.value;
+                    filters.sortField = sortFieldSelect.value;
+                    filters.sortOrder = sortOrderSelect.value;
                     if (filters.year) {
                         filteredHistory = filteredHistory.filter(exp => new Date(exp.dateISO).getFullYear() == filters.year);
                     }
@@ -1539,10 +1458,22 @@
                     if (filters.category) {
                         filteredHistory = filteredHistory.filter(exp => exp.category === filters.category);
                     }
-                    filteredHistory.sort((a, b) => new Date(b.dateISO) - new Date(a.dateISO));
+                    filteredHistory.sort((a, b) => {
+                        let valueA, valueB;
+                        if (filters.sortField === 'dateISO') {
+                            valueA = new Date(a.dateISO);
+                            valueB = new Date(b.dateISO);
+                        } else if (filters.sortField === 'amount') {
+                            valueA = a.amount;
+                            valueB = b.amount;
+                        } else {
+                            valueA = a[filters.sortField].toLowerCase();
+                            valueB = b[filters.sortField].toLowerCase();
+                        }
+                        return filters.sortOrder === 'asc' ? (valueA > valueB ? 1 : -1) : (valueA < valueB ? 1 : -1);
+                    });
                     localStorage.setItem('historyFilters', JSON.stringify(filters));
                     renderHistory(filteredHistory);
-                    renderCategories();
                 }
 
                 resetButton.addEventListener('click', () => {
@@ -1551,11 +1482,13 @@
                     daySelect.value = '';
                     bankSelect.value = '';
                     categorySelect.value = '';
+                    sortFieldSelect.value = 'dateISO';
+                    sortOrderSelect.value = 'desc';
                     localStorage.removeItem('historyFilters');
                     filterAndSortHistory();
                 });
 
-                [yearSelect, monthSelect, daySelect, bankSelect, categorySelect].forEach(select => {
+                [yearSelect, monthSelect, daySelect, bankSelect, categorySelect, sortFieldSelect, sortOrderSelect].forEach(select => {
                     select.addEventListener('change', filterAndSortHistory);
                 });
 
@@ -1618,13 +1551,13 @@
                 const input = document.createElement('input');
                 const currentName = JSON.parse(localStorage.getItem('categories'))[index].name;
                 input.type = 'text';
-                input.value = currentName.length > 15 ? currentName.slice(0,15) : currentName;
+                input.value = currentName.length > 15 ? currentName.slice(0, 15) : currentName;
                 input.maxLength = 15;
                 const saveBtn = document.createElement('button');
                 saveBtn.textContent = 'Сохранить';
                 saveBtn.onclick = () => {
                     let newName = input.value.trim();
-                    if (newName.length > 15) newName = newName.slice(0,15);
+                    if (newName.length > 15) newName = newName.slice(0, 15);
                     if (newName) {
                         updateCategory(index, newName);
                         renderCategories();
@@ -1640,17 +1573,21 @@
                 const day = now.getDay();
                 const diff = now.getDate() - day + (day === 0 ? -6 : 1);
                 const monday = new Date(now.setDate(diff));
-                monday.setHours(0,0,0,0);
+                monday.setHours(0, 0, 0, 0);
                 return monday;
             }
 
             function calculateWeeklyExpenses() {
-                const filteredHistory = getFilteredHistory();
+                const history = JSON.parse(localStorage.getItem('expensesHistory')) || [];
+                const categories = JSON.parse(localStorage.getItem('categories')) || [];
                 const startOfWeek = getStartOfWeek();
                 let weeklyTotal = 0;
-                filteredHistory.forEach(exp => {
+                const enabledCategories = categories
+                    .filter(cat => cat.limitEnabled)
+                    .map(cat => cat.name);
+                history.forEach(exp => {
                     const updateDate = new Date(exp.dateISO);
-                    if (updateDate >= startOfWeek) {
+                    if (updateDate >= startOfWeek && enabledCategories.includes(exp.category)) {
                         weeklyTotal += exp.amount;
                     }
                 });
@@ -1689,7 +1626,7 @@
                 const scrollPercent = docHeight > 0 ? scrollTop / docHeight : 0;
                 const maxHeight = window.innerHeight * 0.4;
                 const scrollBar = document.getElementById('scrollBar');
-                if(scrollBar) {
+                if (scrollBar) {
                     scrollBar.style.top = '0';
                     scrollBar.style.height = `${scrollPercent * maxHeight}px`;
                 }
@@ -1763,7 +1700,10 @@
 
             function clearLimits() {
                 let categories = JSON.parse(localStorage.getItem('categories')) || [];
-                categories.forEach(c => c.limit = 0);
+                categories.forEach(c => {
+                    c.limit = 0;
+                    c.limitEnabled = false;
+                });
                 localStorage.setItem('categories', JSON.stringify(categories));
                 alert("Все лимиты удалены");
                 renderCategories();
@@ -1774,19 +1714,19 @@
                 categories.forEach(c => c.amount = 0);
                 localStorage.setItem('categories', JSON.stringify(categories));
                 localStorage.setItem('expensesHistory', JSON.stringify([]));
+                localStorage.setItem('weeklyTotal', '0');
                 alert("Все расходы удалены");
                 renderCategories();
             }
 
             function updateClock() {
                 const now = new Date();
-                const days = ['Воскресенье','Понедельник','Вторник','Среда','Четверг','Пятница','Суббота'];
+                const days = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
                 const weekday = days[now.getDay()];
                 const dateStr = now.toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' });
                 const timeStr = now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
                 document.getElementById('clock').textContent = `${weekday}, ${dateStr} ${timeStr}`;
             }
-
             setInterval(updateClock, 1000);
             updateClock();
 
@@ -1799,7 +1739,7 @@
                     let categories = JSON.parse(localStorage.getItem('categories')) || [];
                     categories.forEach(c => c.amount = 0);
                     localStorage.setItem('categories', JSON.stringify(categories));
-                    localStorage.setItem('lastResetMonth', JSON.stringify({month: currentMonth, year: currentYear}));
+                    localStorage.setItem('lastResetMonth', JSON.stringify({ month: currentMonth, year: currentYear }));
                     alert("Новый месяц! Все расходы обнулены.");
                     renderCategories();
                 }
@@ -1809,7 +1749,7 @@
                 const today = new Date();
                 const day = today.getDay();
                 if (day === 1) {
-                    const mondayDateStr = today.toISOString().slice(0,10);
+                    const mondayDateStr = today.toISOString().slice(0, 10);
                     const lastWeeklyReset = localStorage.getItem('lastWeeklyReset');
                     if (lastWeeklyReset !== mondayDateStr) {
                         localStorage.setItem('weeklyTotal', '0');
@@ -1820,18 +1760,29 @@
             }
 
             window.addEventListener('scroll', () => {
-                const scrollTop = window.scrollY;
-                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const scrollTop = window.scrollY || document.documentElement.scrollTop;
+                const docHeight = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight) - window.innerHeight;
                 const scrollPercent = docHeight > 0 ? scrollTop / docHeight : 0;
                 const maxHeight = 50;
-                const scrollBar = document.getElementById('scrollBar');
-                if(scrollBar) scrollBar.style.height = `${scrollPercent * maxHeight}px`;
+                const scrollbar = document.getElementById('scrollBar').style.height = `${scrollPercent * maxHeight}px`;
             });
 
-            if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('/sw.js').then(reg => {
-                    reg.addEventListener('updatefound', () => {
-                        const newWorker = reg.installing;
-                        newWorker.addEventListener('statechange', () => {
-                            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                                alert('Доступна новая версия приложения
+            window.addEventListener('resize', () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+
+            document.addEventListener('DOMContentLoaded', () => {
+                renderCategories();
+                calculateWeeklyExpenses();
+                showSection('expenses');
+                initCards();
+            });
+
+            // Ensure categories are rendered and weekly expenses are calculated on page load
+            renderCategories();
+            calculateWeeklyExpenses();
+        </script>
+    </div>
+</body>
+</html>
