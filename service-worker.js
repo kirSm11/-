@@ -1,5 +1,5 @@
 // === 🧱 Настройки кэша ===
-const CACHE_NAME = 'den-g-a-v10'; // ⬅️ меняй версию при каждом обновлении
+const CACHE_NAME = 'den-g-a-v11'; // ⬅️ увеличивай номер при каждом обновлении
 const urlsToCache = [
   '/',
   '/index.html',
@@ -20,19 +20,21 @@ self.addEventListener('install', event => {
   );
 });
 
-// === 🧹 Очистка старого кэша ===
+// === 🧹 Очистка старого кэша и активация ===
 self.addEventListener('activate', event => {
-  // Новая версия сразу берёт контроль
-  clients.claim();
-  event.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(
-        keys
-          .filter(key => key !== CACHE_NAME)
-          .map(key => caches.delete(key))
-      )
-    )
-  );
+  event.waitUntil((async () => {
+    const keys = await caches.keys();
+    await Promise.all(
+      keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))
+    );
+    await clients.claim(); // сразу берём контроль над вкладками
+
+    // 🔔 уведомляем вкладки, что новая версия активна
+    const allClients = await clients.matchAll({ includeUncontrolled: true });
+    for (const client of allClients) {
+      client.postMessage({ type: 'NEW_VERSION_READY' });
+    }
+  })());
 });
 
 // === ⚡ Основная логика запросов ===
@@ -41,7 +43,6 @@ self.addEventListener('fetch', event => {
   event.respondWith(
     fetch(event.request)
       .then(response => {
-        // Обновляем кэш свежей копией
         const clone = response.clone();
         caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
         return response;
@@ -50,7 +51,7 @@ self.addEventListener('fetch', event => {
   );
 });
 
-// === 🔔 Обновление приложения ===
+// === 🔔 Обновление по запросу от клиента ===
 self.addEventListener('message', event => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
