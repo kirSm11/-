@@ -744,6 +744,16 @@ nav {
 #exitHawkBtn {
     pointer-events: auto;
 }
+.version-text {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 12px;
+    color: white;
+    opacity: 0.7;
+    font-family: Arial, sans-serif;
+    z-index: 10;
+}
 </style>
 </head>
 <body>
@@ -761,6 +771,7 @@ nav {
 <div id="header-layer">
     <header>
         <span class="header-box">дѢньга</span>
+        <span id="appVersion" class="version-text"></span>
     </header>
     <div class="shine-container"></div>
 </div>
@@ -1914,6 +1925,26 @@ function forceUpdate() {
     }
     alert('Приложение обновляется...');
 }
+function loadAppVersion() {
+    fetch('/sw.js')
+        .then(response => response.text())
+        .then(text => {
+            const versionMatch = text.match(/const CACHE_NAME = 'den-g-a-(v\d+)'/);
+            const versionElement = document.getElementById('appVersion');
+            if (versionMatch && versionMatch[1]) {
+                versionElement.textContent = versionMatch[1]; // Отображаем, например, "v12"
+            } else {
+                versionElement.textContent = 'v1.0.0'; // Версия по умолчанию
+            }
+        })
+        .catch(error => {
+            console.error('Ошибка загрузки service-worker.js:', error);
+            document.getElementById('appVersion').textContent = 'v1.0.0'; // Версия по умолчанию
+        });
+}
+
+// Вызываем функцию при загрузке страницы
+document.addEventListener('DOMContentLoaded', loadAppVersion);
     </script>
 </div>
 </body>
