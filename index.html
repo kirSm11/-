@@ -1129,7 +1129,6 @@ function showHistory(button, category) {
   modal.className = 'history-modal';
   const history = JSON.parse(localStorage.getItem('expenseHistory')) || [];
   const filteredHistory = history.filter(exp => exp.category === category);
-  const categories = JSON.parse(localStorage.getItem('categories')) || [];
   const banks = ['Сбер', 'Яндекс', 'Тинькофф', 'Альфа', 'ВТБ', 'Халва', 'Уралсиб', 'Другие'];
 
   let tableHTML = `
@@ -1137,10 +1136,6 @@ function showHistory(button, category) {
       <select id="bankFilter" onchange="updateHistoryTable('${category}')">
         <option value="">Все банки</option>
         ${banks.map(bank => `<option value="${bank}">${bank}</option>`).join('')}
-      </select>
-      <select id="dateFilter" onchange="updateHistoryTable('${category}')">
-        <option value="">Все даты</option>
-        ${[...new Set(filteredHistory.map(exp => exp.date))].sort().map(date => `<option value="${date}">${date}</option>`).join('')}
       </select>
     </div>
     <table>
@@ -1166,13 +1161,9 @@ function showHistory(button, category) {
 function updateHistoryTable(category) {
   const history = JSON.parse(localStorage.getItem('expenseHistory')) || [];
   const bankFilter = document.getElementById('bankFilter')?.value || '';
-  const dateFilter = document.getElementById('dateFilter')?.value || '';
   let filteredHistory = history.filter(exp => exp.category === category);
   if (bankFilter) {
     filteredHistory = filteredHistory.filter(exp => exp.bank === bankFilter);
-  }
-  if (dateFilter) {
-    filteredHistory = filteredHistory.filter(exp => exp.date === dateFilter);
   }
   const tbody = document.getElementById('historyTableBody');
   if (!tbody) return;
