@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head> 
+<head>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -63,14 +63,27 @@
 .card[data-bank="Другие"] { background-color: #000000; }
 
 /* Положение карт в сложенном состоянии */
-.card:nth-child(1) { transform: translate(0, 0) rotate(0deg); z-index: 8; }
-.card:nth-child(2) { transform: translate(0, -5px) rotate(0deg); z-index: 7; }
-.card:nth-child(3) { transform: translate(0, -10px) rotate(0deg); z-index: 6; }
-.card:nth-child(4) { transform: translate(0, -15px) rotate(0deg); z-index: 5; }
-.card:nth-child(5) { transform: translate(0, -20px) rotate(0deg); z-index: 4; }
-.card:nth-child(6) { transform: translate(0, -25px) rotate(0deg); z-index: 3; }
-.card:nth-child(7) { transform: translate(0, -30px) rotate(0deg); z-index: 2; }
-.card:nth-child(8) { transform: translate(0, -35px) rotate(0deg); z-index: 1; }
+.card-stack-btn:not(.expanded) .card:nth-child(1) { transform: translate(0, 0) rotate(0deg); z-index: 8; }
+.card-stack-btn:not(.expanded) .card:nth-child(2) { transform: translate(0, -5px) rotate(0deg); z-index: 7; }
+.card-stack-btn:not(.expanded) .card:nth-child(3) { transform: translate(0, -10px) rotate(0deg); z-index: 6; }
+.card-stack-btn:not(.expanded) .card:nth-child(4) { transform: translate(0, -15px) rotate(0deg); z-index: 5; }
+.card-stack-btn:not(.expanded) .card:nth-child(5) { transform: translate(0, -20px) rotate(0deg); z-index: 4; }
+.card-stack-btn:not(.expanded) .card:nth-child(6) { transform: translate(0, -25px) rotate(0deg); z-index: 3; }
+.card-stack-btn:not(.expanded) .card:nth-child(7) { transform: translate(0, -30px) rotate(0deg); z-index: 2; }
+.card-stack-btn:not(.expanded) .card:nth-child(8) { transform: translate(0, -35px) rotate(0deg); z-index: 1; }
+
+/* Положение карт при раскрытии */
+.card-stack-btn.expanded .card {
+  transition: transform 0.4s cubic-bezier(0.25, 1.5, 0.5, 1), box-shadow 0.4s;
+}
+.card-stack-btn.expanded .card:nth-child(1) { transform: translate(0, 0px) rotate(0deg) scale(1.05); z-index: 1; }
+.card-stack-btn.expanded .card:nth-child(2) { transform: translate(0, -70px) rotate(-5deg) scale(1.05); z-index: 2; }
+.card-stack-btn.expanded .card:nth-child(3) { transform: translate(0, -140px) rotate(3deg) scale(1.05); z-index: 3; }
+.card-stack-btn.expanded .card:nth-child(4) { transform: translate(0, -210px) rotate(-3deg) scale(1.05); z-index: 4; }
+.card-stack-btn.expanded .card:nth-child(5) { transform: translate(0, -280px) rotate(2deg) scale(1.05); z-index: 5; }
+.card-stack-btn.expanded .card:nth-child(6) { transform: translate(0, -350px) rotate(-2deg) scale(1.05); z-index: 6; }
+.card-stack-btn.expanded .card:nth-child(7) { transform: translate(0, -420px) rotate(4deg) scale(1.05); z-index: 7; }
+.card-stack-btn.expanded .card:nth-child(8) { transform: translate(0, -490px) rotate(-4deg) scale(1.05); z-index: 8; }
 
 .card .bank-buttons {
   position: absolute;
@@ -105,24 +118,14 @@
   color: transparent;
 }
 
-/* Положение карт при раскрытии */
-.card-stack-btn.expanded .card:nth-child(1) { transform: translate(0,0px) rotate(0deg) scale(1.05); }
-.card-stack-btn.expanded .card:nth-child(2) { transform: translate(0,-70px) rotate(-5deg) scale(1.05); }
-.card-stack-btn.expanded .card:nth-child(3) { transform: translate(0,-140px) rotate(3deg) scale(1.05); }
-.card-stack-btn.expanded .card:nth-child(4) { transform: translate(0,-210px) rotate(-3deg) scale(1.05); }
-.card-stack-btn.expanded .card:nth-child(5) { transform: translate(0,-280px) rotate(2deg) scale(1.05); }
-.card-stack-btn.expanded .card:nth-child(6) { transform: translate(0,-350px) rotate(-2deg) scale(1.05); }
-.card-stack-btn.expanded .card:nth-child(7) { transform: translate(0,-420px) rotate(4deg) scale(1.05); }
-.card-stack-btn.expanded .card:nth-child(8) { transform: translate(0,-490px) rotate(-4deg) scale(1.05); }
-
-/* Оверлей */
+/* Оверлей с усиленным затемнением */
 #overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0,0,0,0.7);
+  background-color: rgba(0,0,0,0.85); /* Усиленное затемнение */
   display: none;
   z-index: 1000;
 }
@@ -160,10 +163,10 @@ header {
 .shine-container {
   position: absolute;
   top: 28px;
-  left: 11%;       
-  width: 78%;     
+  left: 11%;
+  width: 78%;
   height: 163px;
-  overflow: hidden; 
+  overflow: hidden;
   pointer-events: none;
 }
 
@@ -231,7 +234,7 @@ nav button {
     color: #4CAF50;
     cursor: pointer;
     transition: background 0.2s, color 0.2s;
-    z-index: 1; 
+    z-index: 1;
 }
 
 nav button:hover {
@@ -597,14 +600,14 @@ input:checked + .slider:before {
 }
 
 /* Прозрачность интерфейса */
-body, 
-.app-container, 
-header, 
-nav, 
-main, 
-section, 
-#statsCategories, 
-#settingsSubmenu, 
+body,
+.app-container,
+header,
+nav,
+main,
+section,
+#statsCategories,
+#settingsSubmenu,
 #adminSubmenu {
   background: transparent !important;
   box-shadow: none !important;
@@ -899,17 +902,47 @@ nav {
       cards = getCards();
 
       function moveCardToTop(bankName) {
+        if (cards.length === 0) return;
         const card = cards.find(c => c.dataset.bank === bankName);
         if (!card) return;
-        stack.appendChild(card);
-        cards = [...cards.filter(c => c !== card), card];
+
+        // Перемещаем карту в начало DOM
+        stack.prepend(card);
+        
+        // Обновляем массив cards
+        cards = [card, ...cards.filter(c => c !== card)];
+        
+        // Сохраняем выбранный банк
         localStorage.setItem('selectedBank', bankName);
+        
+        // Обновляем z-index и transform только в сложенном состоянии
+        if (!stack.classList.contains('expanded')) {
+          updateCardStyles();
+        }
+        
+        // Переинициализируем обработчики событий
         initCardListeners();
+      }
+
+      function updateCardStyles() {
+        cards.forEach((card, index) => {
+          card.style.zIndex = cards.length - index; // Первая карта — наивысший z-index
+          card.style.transform = `translate(0, ${-index * 5}px) rotate(0deg)`;
+        });
       }
 
       function toggleStack() {
         stack.classList.toggle('expanded');
         overlay.style.display = stack.classList.contains('expanded') ? 'block' : 'none';
+        if (!stack.classList.contains('expanded')) {
+          updateCardStyles(); // Восстанавливаем порядок при сворачивании
+        } else {
+          // Сбрасываем JavaScript-стили, чтобы CSS управлял раскладкой
+          cards.forEach(card => {
+            card.style.transform = '';
+            card.style.zIndex = '';
+          });
+        }
       }
 
       stack.addEventListener('click', e => {
@@ -920,6 +953,7 @@ nav {
       overlay.addEventListener('click', () => {
         stack.classList.remove('expanded');
         overlay.style.display = 'none';
+        updateCardStyles(); // Восстанавливаем порядок при закрытии оверлея
       });
 
       stack.querySelectorAll('.bank-buttons button').forEach(btn => {
@@ -929,6 +963,7 @@ nav {
           moveCardToTop(bankName);
           stack.classList.remove('expanded');
           overlay.style.display = 'none';
+          updateCardStyles();
         });
       });
 
@@ -942,12 +977,23 @@ nav {
       function handleCardClick(e) {
         if (!stack.classList.contains('expanded')) return;
         e.stopPropagation();
-        moveCardToTop(this.dataset.bank);
+        const bankName = this.dataset.bank;
+        moveCardToTop(bankName);
         stack.classList.remove('expanded');
         overlay.style.display = 'none';
+        updateCardStyles();
       }
 
       initCardListeners();
+
+      // При загрузке устанавливаем начальные стили для карт
+      updateCardStyles();
+
+      // Восстанавливаем выбранную карту при загрузке
+      const savedBank = localStorage.getItem('selectedBank');
+      if (savedBank) {
+        setTimeout(() => moveCardToTop(savedBank), 100);
+      }
     }
 
     function showSection(id) {
@@ -967,6 +1013,7 @@ nav {
         if (cardStack.classList.contains('expanded')) {
           cardStack.classList.remove('expanded');
           overlay.style.display = 'none';
+          updateCardStyles();
         }
       }
       if (id === 'stats') {
@@ -1709,6 +1756,7 @@ function showHistory() {
   };
   overlay.addEventListener('click', overlayHandler);
 }
+
     function cleanOldExpenses() {
       const history = JSON.parse(localStorage.getItem('expensesHistory')) || [];
       const twelveMonthsAgo = new Date();
@@ -1793,13 +1841,6 @@ function showHistory() {
       initCards();
       showSection('expenses');
       renderCategories();
-
-      const savedBank = localStorage.getItem('selectedBank');
-      if (savedBank && cards.length > 0) {
-        setTimeout(() => {
-          moveCardToTop(savedBank);
-        }, 100);
-      }
     });
 
     const canvas = document.getElementById('sparkCanvas');
@@ -1958,29 +1999,6 @@ function showHistory() {
       const scrollBar = document.getElementById('scrollBar');
       if(scrollBar) scrollBar.style.height = `${scrollPercent * maxHeight}px`;
     });
-
-    function moveCardToTop(bankName) {
-      if (cards.length === 0) return;
-      const card = cards.find(c => c.dataset.bank === bankName);
-      if (!card) return;
-      
-      stack.appendChild(card);
-      cards = [...cards.filter(c => c !== card), card];
-      localStorage.setItem('selectedBank', bankName);
-      const getCards = () => Array.from(stack.querySelectorAll('.card'));
-      getCards().forEach(card => {
-        card.removeEventListener('click', handleCardClick);
-        card.addEventListener('click', handleCardClick);
-      });
-
-      function handleCardClick(e) {
-        if (!stack.classList.contains('expanded')) return;
-        e.stopPropagation();
-        moveCardToTop(this.dataset.bank);
-        stack.classList.remove('expanded');
-        overlay.style.display = 'none';
-      }
-    }
   </script>
 </div>
 </body>
