@@ -16,7 +16,7 @@
 /* Контейнер стопки */
 .card-stack-btn {
     position: fixed;
-    bottom: 40px;
+    bottom: 40px; /* Поднято с 20px на 40px */
     right: 20px;
     width: 100px;
     cursor: pointer;
@@ -481,6 +481,11 @@ input:checked + .slider:before {
     min-width: 50px;
     text-align: center;
     transition: background 0.3s, transform 0.2s;
+    cursor: pointer;
+}
+.limit-badge:hover {
+    background: #e0ffe0;
+    transform: scale(1.05);
 }
 .limit-badge.active {
     background: #4CAF50;
@@ -511,21 +516,12 @@ input:checked + .slider:before {
     padding: 8px 12px;
     margin-bottom: 8px;
 }
-.settings-row .name-btn {
-    flex: 1;
-    text-align: left;
-    padding: 8px 12px;
-    background: #2196F3;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 14px;
+.settings-row .name {
     font-weight: bold;
-    transition: background 0.3s;
-}
-.settings-row .name-btn:hover {
-    background: #0b7dda;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
 }
 .limit-badge {
     margin: 0 10px;
@@ -758,43 +754,6 @@ nav {
     font-family: Arial, sans-serif;
     z-index: 10;
 }
-/* Стили для модалки с инструкциями */
-.instructions-modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.5);
-    z-index: 1001;
-    max-width: 90vw;
-    max-height: 80vh;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    font-family: Arial, sans-serif;
-}
-.instructions-modal h2 {
-    color: #4CAF50;
-    font-family: 'MedievalSharp', cursive;
-    font-size: 24px;
-    margin-top: 0;
-}
-.instructions-modal p {
-    font-size: 16px;
-    line-height: 1.5;
-    color: #333;
-}
-.instructions-modal ul {
-    padding-left: 20px;
-    margin: 10px 0;
-}
-.instructions-modal li {
-    margin-bottom: 10px;
-    font-size: 16px;
-    color: #333;
-}
 </style>
 </head>
 <body>
@@ -845,22 +804,21 @@ nav {
             <button onclick="spring(this); showHistory()">История расходов</button>
         </section>
         <section id="settings">
-            <h2>Настройки</h2>
-            <p></p>
-            <button onclick="toggleSubmenu()">Лимиты</button>
-            <div id="settingsSubmenu" style="display: none;">
-                <h3>Категории расходов</h3>
-                <div id="settingsCategories"></div>
-            </div>
-            <button onclick="toggleAdminSubmenu()">Управление данными</button>
-            <div id="adminSubmenu" style="display: none; margin-top: 15px; padding: 10px; background: #fff; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.2);">
-                <h3>Управление данными</h3>
-                <button onclick="if(confirm('Ты уверен, что хочешь удалить все лимиты?')) clearLimits();">Удалить все лимиты</button>
-                <button onclick="if(confirm('Ты уверен, что хочешь удалить все расходы?')) clearExpenses();">Удалить все расходы</button>
-            </div>
-            <button onclick="spring(this); showInstructions()">Инструкция</button>
-            <button onclick="forceUpdate()">Обновить приложение</button>
-        </section>
+    <h2>Настройки</h2>
+    <p></p>
+    <button onclick="toggleSubmenu()">лимиты</button>
+    <div id="settingsSubmenu" style="display: none;">
+        <h3>Категории расходов</h3>
+        <div id="settingsCategories"></div>
+    </div>
+    <button onclick="toggleAdminSubmenu()">управление данными</button>
+    <div id="adminSubmenu" style="display: none; margin-top: 15px; padding: 10px; background: #fff; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.2);">
+        <h3>Управление данными</h3>
+        <button onclick="if(confirm('Ты увере, что хочешь сделать с лимитами то, что хочешь?')) clearLimits();">Удалить все лимиты</button>
+        <button onclick="if(confirm('Ты уверен, что хочешь сделать с расходами то, что хочешь?')) clearExpenses();">Удалить все расходы</button>
+    </div>
+    <button onclick="forceUpdate()">Обновить приложение</button>
+</section>
     </main>
     <canvas id="sparkCanvas"></canvas>
     <script>
@@ -994,7 +952,7 @@ nav {
 
         function saveCategory(name) {
             let categories = JSON.parse(localStorage.getItem('categories')) || [];
-            categories.push({name: name, amount: 0, limit: 0, limitEnabled: false, lastUpdate: null});
+            categories.push({name: name, amount: 0, limit: 0, lastUpdate: null});
             localStorage.setItem('categories', JSON.stringify(categories));
         }
 
@@ -1095,19 +1053,6 @@ nav {
             return filteredHistory;
         }
 
-        function setCategoryLimit(index, catName) {
-            let categories = JSON.parse(localStorage.getItem('categories')) || [];
-            let value = prompt(`Введите лимит для категории "${catName}"`, categories[index].limit || 0);
-            if (value !== null && !isNaN(value) && value.trim() !== '') {
-                categories[index].limit = parseFloat(value);
-                categories[index].limitEnabled = true;
-                localStorage.setItem('categories', JSON.stringify(categories));
-                renderCategories();
-            } else if (value !== null) {
-                alert('Пожалуйста, введите корректное число для лимита');
-            }
-        }
-
         function renderCategories() {
             const list = document.getElementById('categoriesList');
             const statsList = document.getElementById('statsCategories');
@@ -1143,7 +1088,7 @@ nav {
                     if (!dragEnabled) {
                         pressTimer = setTimeout(() => {
                             showActionModal(catBtn, currentIndex);
-                        }, 500);
+                        }, 1);
                         return;
                     }
                     if (e.type === 'touchstart') e.preventDefault();
@@ -1151,7 +1096,7 @@ nav {
                     isDragging = false;
                     pressTimer = setTimeout(() => {
                         if (!isDragging) showActionModal(catBtn, currentIndex);
-                    }, 500);
+                    }, 10);
 
                     function onMove(ev) {
                         const moveY = ev.clientY || (ev.touches && ev.touches[0].clientY);
@@ -1221,21 +1166,41 @@ nav {
                 if (settingsList) {
                     const row = document.createElement('div');
                     row.className = 'settings-row';
-                    const nameBtn = document.createElement('button');
-                    nameBtn.className = 'name-btn';
-                    nameBtn.textContent = cat.name;
-                    nameBtn.onclick = () => setCategoryLimit(idx, cat.name);
-                    row.appendChild(nameBtn);
-                    const limitBadge = document.createElement('span');
-                    limitBadge.className = 'limit-badge';
-                    limitBadge.textContent = cat.limit && cat.limit > 0 ? `${cat.limit} ₽` : 'Нет лимита';
-                    if (cat.limitEnabled && cat.limit > 0) limitBadge.classList.add('active');
-                    row.appendChild(limitBadge);
+                    const nameSpan = document.createElement('span');
+                    nameSpan.className = 'name';
+                    nameSpan.textContent = cat.name;
+                    row.appendChild(nameSpan);
+                    if (cat.limit && cat.limit > 0) {
+                        const limitBadge = document.createElement('span');
+                        limitBadge.className = 'limit-badge';
+                        limitBadge.textContent = `${cat.limit} ₽`;
+                        if (cat.limitEnabled) limitBadge.classList.add('active');
+                        row.appendChild(limitBadge);
+                        limitBadge.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            let touchTimer = setTimeout(() => {
+                                let categories = JSON.parse(localStorage.getItem('categories')) || [];
+                                let value = prompt(`Введите лимит для категории "${cat.name}"`, cat.limit || 0);
+                                if (value !== null && !isNaN(value)) {
+                                    categories[idx].limit = parseFloat(value);
+                                    localStorage.setItem('categories', JSON.stringify(categories));
+                                    renderCategories();
+                                }
+                            }, 200);
+                            const cancelTouch = () => {
+                                clearTimeout(touchTimer);
+                                document.removeEventListener('mouseup', cancelTouch);
+                                document.removeEventListener('touchend', cancelTouch);
+                            };
+                            document.addEventListener('mouseup', cancelTouch);
+                            document.addEventListener('touchend', cancelTouch);
+                        });
+                    }
                     const label = document.createElement('label');
                     label.className = "switch";
                     const input = document.createElement('input');
                     input.type = "checkbox";
-                    input.checked = cat.limitEnabled && cat.limit > 0;
+                    input.checked = cat.limitEnabled ?? (cat.limit && cat.limit > 0);
                     const slider = document.createElement('span');
                     slider.className = "slider";
                     label.appendChild(input);
@@ -1246,7 +1211,7 @@ nav {
                         categories[idx].limitEnabled = input.checked;
                         localStorage.setItem('categories', JSON.stringify(categories));
                         const limitBadge = row.querySelector('.limit-badge');
-                        if (limitBadge && cat.limit > 0) {
+                        if (limitBadge) {
                             if (input.checked) limitBadge.classList.add('active');
                             else limitBadge.classList.remove('active');
                         }
@@ -1263,16 +1228,16 @@ nav {
             })));
 
             let total = Object.values(categorySums).reduce((sum, c) => sum + c.amount, 0);
-            let totalLimits = Object.values(categorySums).reduce((sum, c) => sum + (c.limitEnabled && c.limit > 0 ? c.limit : 0), 0);
+            let totalLimits = Object.values(categorySums).reduce((sum, c) => sum + (c.limit || 0), 0);
             const totalContainer = document.getElementById('totalExpenses');
             if (totalContainer) {
                 totalContainer.innerHTML = `<p>Всего расходов: ${total.toFixed(2)} ₽</p>
-                <p id="weeklyExpenses">Недельные траты: 0 ₽</p>`;
+                <p id="weeklyExpenses">недельные траты: 0 ₽</p>`;
             }
             const weeklyElem = document.getElementById('weeklyExpenses');
             if (weeklyElem) {
                 let weeklyTotal = parseFloat(localStorage.getItem('weeklyTotal')) || 0;
-                weeklyElem.textContent = `Недельные траты: ${weeklyTotal.toFixed(2)} ₽`;
+                weeklyElem.textContent = `недельные траты: ${weeklyTotal.toFixed(2)} ₽`;
             }
             const totalLimitsContainer = document.getElementById('totalLimits');
             if (totalLimitsContainer) {
@@ -1341,7 +1306,6 @@ nav {
             });
             const renameBtn = document.createElement('button');
             renameBtn.textContent = 'Переименовать';
-            renameBtn.className = 'rename';
             renameBtn.onclick = (e) => {
                 e.stopPropagation();
                 removeActionModal();
@@ -1355,7 +1319,7 @@ nav {
                 let categories = JSON.parse(localStorage.getItem('categories'));
                 const category = categories[index];
                 let amount = prompt(`Введите сумму расхода для категории "${category.name}"`, '0');
-                if (amount !== null && !isNaN(amount) && amount.trim() !== '') {
+                if (amount !== null && !isNaN(amount)) {
                     amount = parseFloat(amount);
                     const bank = localStorage.getItem('selectedBank') || 'Неизвестно';
                     const now = new Date();
@@ -1395,7 +1359,7 @@ nav {
             modal.appendChild(addExpenseBtn);
             modal.appendChild(deleteBtn);
             const hawkBtn = document.createElement('button');
-            hawkBtn.textContent = 'Настроить 🦅';
+            hawkBtn.textContent = 'настроить 🦅';
             hawkBtn.style.background = 'linear-gradient(135deg, #5A7DE1, #A0D4FA)';
             hawkBtn.style.color = 'white';
             hawkBtn.style.fontWeight = 'bold';
@@ -1464,41 +1428,6 @@ nav {
             currentModal = null;
             if (outsideClickHandler) document.removeEventListener('click', outsideClickHandler);
             outsideClickHandler = null;
-        }
-
-        function showInstructions() {
-            overlay.style.display = 'block';
-            const modal = document.createElement('div');
-            modal.className = 'instructions-modal';
-            const closeBtn = document.createElement('button');
-            closeBtn.className = 'close-btn';
-            closeBtn.onclick = () => {
-                overlay.style.display = 'none';
-                modal.remove();
-            };
-            modal.appendChild(closeBtn);
-            modal.innerHTML += `
-                <h2>Инструкция по использованию деньГа</h2>
-                <p>Добро пожаловать в приложение <b>деньГа</b>! Это удобный инструмент для управления вашими расходами и контроля бюджета. Вот как пользоваться приложением:</p>
-                <ul>
-                    <li><b>Выбор банка:</b> В правом нижнем углу экрана в разделе "Расходы" вы увидите стопку карт. Нажмите на неё, чтобы выбрать банк для учёта расходов. Выбранный банк отобразится сверху стопки.</li>
-                    <li><b>Добавление категорий:</b> В разделе "Расходы" нажмите "Добавить категорию", введите название (например, "Еда" или "Транспорт") и сохраните. Категории помогут организовать ваши траты.</li>
-                    <li><b>Внесение расходов:</b> Нажмите и удерживайте категорию в разделе "Расходы", выберите "Внести расход", укажите сумму и подтвердите. Расход будет записан с выбранным банком и текущей датой.</li>
-                    <li><b>Переименование и удаление:</b> Удерживайте категорию, чтобы переименовать или удалить её. Также можно включить режим "Ястреб" для перетаскивания категорий и изменения их порядка.</li>
-                    <li><b>Лимиты:</b> В разделе "Настройки" нажмите "Лимиты", затем нажмите на название категории, чтобы установить бюджет. Включите или выключите лимиты с помощью переключателя. Если лимит превышен, в разделе "Статистика" остаток будет подсвечен красным.</li>
-                    <li><b>Статистика:</b> В разделе "Статистика" смотрите общие расходы, остатки по лимитам и круговую диаграмму. Нажмите "История расходов", чтобы увидеть все траты с фильтрами по дате, банку или категории.</li>
-                    <li><b>Управление данными:</b> В "Настройках" можно удалить все лимиты или расходы, если нужно начать с чистого листа.</li>
-                    <li><b>Обновление приложения:</b> Кнопка "Обновить приложение" в "Настройках" загрузит последнюю версию приложения, если она доступна.</li>
-                </ul>
-                <p>Если что-то непонятно, возвращайтесь к этой инструкции в любой момент! 😊</p>
-            `;
-            document.body.appendChild(modal);
-            const overlayHandler = () => {
-                overlay.style.display = 'none';
-                modal.remove();
-                overlay.removeEventListener('click', overlayHandler);
-            };
-            overlay.addEventListener('click', overlayHandler);
         }
 
         function showHistory() {
@@ -1714,25 +1643,26 @@ nav {
         }
 
         function calculateWeeklyExpenses() {
-            const filteredHistory = getFilteredHistory();
-            const startOfWeek = getStartOfWeek();
-            const categories = JSON.parse(localStorage.getItem('categories')) || [];
-            let weeklyTotal = 0;
+    const filteredHistory = getFilteredHistory();
+    const startOfWeek = getStartOfWeek();
+    const categories = JSON.parse(localStorage.getItem('categories')) || [];
+    let weeklyTotal = 0;
 
-            filteredHistory.forEach(exp => {
-                const updateDate = new Date(exp.dateISO);
-                const category = categories.find(cat => cat.name === exp.category);
-                if (updateDate >= startOfWeek && category && category.limitEnabled) {
-                    weeklyTotal += exp.amount;
-                }
-            });
-
-            localStorage.setItem('weeklyTotal', weeklyTotal.toString());
-            const weeklyElem = document.getElementById('weeklyExpenses');
-            if (weeklyElem) {
-                weeklyElem.textContent = `Недельные траты: ${weeklyTotal.toFixed(2)} ₽`;
-            }
+    filteredHistory.forEach(exp => {
+        const updateDate = new Date(exp.dateISO);
+        const category = categories.find(cat => cat.name === exp.category);
+        // Учитываем траты только если категория существует и limitEnabled включен
+        if (updateDate >= startOfWeek && category && category.limitEnabled) {
+            weeklyTotal += exp.amount;
         }
+    });
+
+    localStorage.setItem('weeklyTotal', weeklyTotal.toString());
+    const weeklyElem = document.getElementById('weeklyExpenses');
+    if (weeklyElem) {
+        weeklyElem.textContent = `недельные траты: ${weeklyTotal.toFixed(2)} ₽`;
+    }
+}
 
         document.addEventListener('DOMContentLoaded', () => {
             if ('serviceWorker' in navigator) {
@@ -1854,118 +1784,168 @@ nav {
         function updateClock() {
             const now = new Date();
             const days = ['Воскресенье','Понедельник','Вторник','Среда','Четверг','Пятница','Суббота'];
-            const hours = now.getHours().toString().padStart(2, '0');
-            const minutes = now.getMinutes().toString().padStart(2, '0');
-            const seconds = now.getSeconds().toString().padStart(2, '0');
-            const clock = document.getElementById('clock');
-            if (clock) {
-                clock.textContent = `${days[now.getDay()]}, ${hours}:${minutes}:${seconds}`;
-            }
+            const weekday = days[now.getDay()];
+            const dateStr = now.toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' });
+            const timeStr = now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            document.getElementById('clock').textContent = `${weekday}, ${dateStr} ${timeStr}`;
         }
 
+        setInterval(updateClock, 1000);
+        updateClock();
+
         function autoResetMonthlyExpenses() {
-            const now = new Date();
-            const lastReset = localStorage.getItem('lastMonthlyReset');
-            const currentMonth = now.getMonth();
-            const currentYear = now.getFullYear();
-            if (!lastReset || new Date(lastReset).getMonth() !== currentMonth || new Date(lastReset).getFullYear() !== currentYear) {
+            const today = new Date();
+            const currentMonth = today.getMonth();
+            const currentYear = today.getFullYear();
+            const lastReset = JSON.parse(localStorage.getItem('lastResetMonth'));
+            if (today.getDate() === 1 && (!lastReset || lastReset.month !== currentMonth || lastReset.year !== currentYear)) {
                 let categories = JSON.parse(localStorage.getItem('categories')) || [];
-                categories.forEach(cat => {
-                    cat.amount = 0;
-                    cat.lastUpdate = now.toISOString();
-                });
+                categories.forEach(c => c.amount = 0);
                 localStorage.setItem('categories', JSON.stringify(categories));
-                localStorage.setItem('lastMonthlyReset', now.toISOString());
-                localStorage.setItem('expensesHistory', JSON.stringify([]));
+                localStorage.setItem('lastResetMonth', JSON.stringify({month: currentMonth, year: currentYear}));
+                alert("Новый месяц! Все расходы обнулены.");
                 renderCategories();
             }
         }
 
         function autoResetWeeklyExpenses() {
-            const now = new Date();
-            const lastReset = localStorage.getItem('lastWeeklyReset');
-            const startOfWeek = getStartOfWeek();
-            if (!lastReset || new Date(lastReset) < startOfWeek) {
-                localStorage.setItem('weeklyTotal', '0');
-                localStorage.setItem('lastWeeklyReset', now.toISOString());
-                const weeklyElem = document.getElementById('weeklyExpenses');
-                if (weeklyElem) {
-                    weeklyElem.textContent = `недельные траты: 0 ₽`;
+            const today = new Date();
+            const day = today.getDay();
+            if (day === 1) {
+                const mondayDateStr = today.toISOString().slice(0,10);
+                const lastWeeklyReset = localStorage.getItem('lastWeeklyReset');
+                if (lastWeeklyReset !== mondayDateStr) {
+                    localStorage.setItem('weeklyTotal', '0');
+                    localStorage.setItem('lastWeeklyReset', mondayDateStr);
+                    calculateWeeklyExpenses();
                 }
             }
         }
 
-        function forceUpdate() {
-            if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.getRegistrations().then(registrations => {
-                    for (let registration of registrations) {
-                        registration.unregister();
-                    }
-                    caches.keys().then(keys => {
-                        return Promise.all(keys.map(key => caches.delete(key)));
-                    }).then(() => {
-                        window.location.reload(true);
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = docHeight > 0 ? scrollTop / docHeight : 0;
+            const maxHeight = 50;
+            const scrollBar = document.getElementById('scrollBar');
+            if(scrollBar) scrollBar.style.height = `${scrollPercent * maxHeight}px`;
+        });
+
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js').then(reg => {
+                reg.addEventListener('updatefound', () => {
+                    const newWorker = reg.installing;
+                    newWorker.addEventListener('statechange', () => {
+                        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                            alert('Доступна новая версия приложения! Перезагрузите страницу.');
+                        }
                     });
                 });
-            } else {
+            });
+        }
+        // === 🚀 Регистрация и автообновление Service Worker ===
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', async () => {
+    try {
+      const reg = await navigator.serviceWorker.register('/service-worker.js');
+      console.log('✅ Service Worker зарегистрирован:', reg.scope);
+
+      // Проверяем обновления при запуске
+      reg.update();
+
+      // Когда приходит сообщение о новой версии
+      navigator.serviceWorker.addEventListener('message', (event) => {
+        if (event.data && event.data.type === 'NEW_VERSION_READY') {
+          console.log('💫 Доступна новая версия приложения');
+          showUpdateBanner(reg);
+        }
+      });
+    } catch (err) {
+      console.error('❌ Ошибка регистрации SW:', err);
+    }
+  });
+}
+
+// === 🎨 Красивое уведомление об обновлении ===
+function showUpdateBanner(reg) {
+  const banner = document.createElement('div');
+  banner.textContent = '💫 Доступна новая версия приложения. Обновить?';
+  Object.assign(banner.style, {
+    position: 'fixed',
+    bottom: '20px',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    background: '#222',
+    color: '#fff',
+    padding: '12px 20px',
+    borderRadius: '8px',
+    boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+    zIndex: '9999',
+    cursor: 'pointer',
+    fontFamily: 'sans-serif',
+    fontSize: '15px',
+  });
+
+  banner.addEventListener('click', () => {
+    banner.textContent = '🔄 Обновляем...';
+    reg.waiting?.postMessage({ type: 'SKIP_WAITING' });
+    setTimeout(() => window.location.reload(), 1000);
+  });
+
+  document.body.appendChild(banner);
+}
+function forceUpdate() {
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(registrations => {
+            for (let registration of registrations) {
+                registration.unregister().then(() => {
+                    console.log('Service Worker успешно удален');
+                });
+            }
+            caches.keys().then(cacheNames => {
+                return Promise.all(
+                    cacheNames.map(cacheName => {
+                        return caches.delete(cacheName).then(() => {
+                            console.log(`Кэш ${cacheName} удален`);
+                        });
+                    })
+                );
+            }).then(() => {
                 window.location.reload(true);
+            }).catch(err => {
+                console.error('Ошибка при очистке кэша:', err);
+                window.location.reload(true);
+            });
+        }).catch(err => {
+            console.error('Ошибка при получении регистраций Service Worker:', err);
+            window.location.reload(true);
+        });
+    } else {
+        window.location.reload(true);
+    }
+    alert('Приложение обновляется...');
+}
+function loadAppVersion() {
+    fetch('/sw.js')
+        .then(response => response.text())
+        .then(text => {
+            const versionMatch = text.match(/const CACHE_NAME = 'den-g-a-(v\d+)'/);
+            const versionElement = document.getElementById('appVersion');
+            if (versionMatch && versionMatch[1]) {
+                versionElement.textContent = versionMatch[1]; // Отображаем, например, "v12"
+            } else {
+                versionElement.textContent = 'v1.0.0'; // Версия по умолчанию
             }
-        }
-
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+        })
+        .catch(error => {
+            console.error('Ошибка загрузки service-worker.js:', error);
+            document.getElementById('appVersion').textContent = 'v1.0.0'; // Версия по умолчанию
         });
+}
 
-        setInterval(updateClock, 1000);
-        setInterval(autoResetWeeklyExpenses, 3600000); // Проверять еженедельный сброс каждый час
-        setInterval(autoResetMonthlyExpenses, 3600000); // Проверять ежемесячный сброс каждый час
-
-        // Инициализация версии приложения
-        const appVersion = document.getElementById('appVersion');
-        if (appVersion) {
-            appVersion.textContent = 'v1.0.0'; // Укажите актуальную версию приложения
-        }
-
-        // Обработка жестов для сенсорных устройств
-        let touchStartX = 0;
-        let touchStartY = 0;
-
-        document.addEventListener('touchstart', e => {
-            touchStartX = e.touches[0].clientX;
-            touchStartY = e.touches[0].clientY;
-        }, { passive: true });
-
-        document.addEventListener('touchmove', e => {
-            if (hawkMode) {
-                e.preventDefault();
-            }
-        }, { passive: false });
-
-        // Обработка изменения ориентации экрана
-        window.addEventListener('orientationchange', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            renderCategories();
-        });
-
-        // Обработка события для предотвращения масштабирования на мобильных устройствах
-        document.addEventListener('gesturestart', e => {
-            e.preventDefault();
-        });
-
-        // Инициализация PWA-установки
-        let deferredPrompt;
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            // Можно добавить кнопку для установки приложения, если нужно
-        });
-
-        // Обработка события установки приложения
-        window.addEventListener('appinstalled', () => {
-            console.log('Приложение установлено');
-        });
+// Вызываем функцию при загрузке страницы
+document.addEventListener('DOMContentLoaded', loadAppVersion);
     </script>
+</div>
 </body>
 </html>
