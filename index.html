@@ -951,11 +951,10 @@ nav {
         }
 
         function saveCategory(name) {
-            let categories = JSON.parse(localStorage.getItem('categories')) || [];
-            categories.push({name: name, amount: 0, limit: 0, lastUpdate: null});
-            localStorage.setItem('categories', JSON.stringify(categories));
-        }
-
+    let categories = JSON.parse(localStorage.getItem('categories')) || [];
+    categories.push({name: name, amount: 0, limit: 0, lastUpdate: null, limitEnabled: false});
+    localStorage.setItem('categories', JSON.stringify(categories));
+}
         function updateCategory(index, newName) {
             let categories = JSON.parse(localStorage.getItem('categories')) || [];
             categories[index].name = newName.length > 15 ? newName.slice(0,15) : newName;
@@ -1054,13 +1053,20 @@ nav {
         }
 
         function renderCategories() {
-            const list = document.getElementById('categoriesList');
-            const statsList = document.getElementById('statsCategories');
-            const settingsList = document.getElementById('settingsCategories');
-            list.innerHTML = '';
-            if (statsList) statsList.innerHTML = '';
-            if (settingsList) settingsList.innerHTML = '';
-            let categories = JSON.parse(localStorage.getItem('categories')) || [];
+    const list = document.getElementById('categoriesList');
+    const statsList = document.getElementById('statsCategories');
+    const settingsList = document.getElementById('settingsCategories');
+    list.innerHTML = '';
+    if (statsList) statsList.innerHTML = '';
+    if (settingsList) settingsList.innerHTML = '';
+    let categories = JSON.parse(localStorage.getItem('categories')) || [];
+    
+    // Миграция: добавляем limitEnabled: false для старых категорий
+    categories = categories.map(cat => ({
+        ...cat,
+        limitEnabled: cat.limitEnabled ?? false
+    }));
+    localStorage.setItem('categories', JSON.stringify(categories));
             const filteredHistory = getFilteredHistory();
             const categorySums = {};
             categories.forEach(cat => {
